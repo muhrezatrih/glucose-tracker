@@ -52,9 +52,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         onAuthChange();
         setTimeout(() => onClose(), 800);
       } else {
-        // Redirect email confirmation link dynamically to current web app URL
         const redirectUrl = window.location.origin;
-        const { error: signUpError } = await supabase.auth.signUp({
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -62,12 +61,35 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           },
         });
         if (signUpError) throw signUpError;
-        setMessage('Account created! Check your email to confirm registration or log in now.');
-        setMode('login');
-        onAuthChange();
+
+        // If email confirmation is disabled in Supabase, user gets instant session!
+        if (signUpData.session) {
+          setMessage('Account created and logged in!');
+          onAuthChange();
+          setTimeout(() => onClose(), 800);
+        } else {
+          // Attempt automatic sign-in if account is created
+          const { error: autoSignInErr } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+          if (!autoSignInErr) {
+            setMessage('Account created and logged in!');
+            onAuthChange();
+            setTimeout(() => onClose(), 800);
+          } else {
+            setMessage('Account created! You can sign in now.');
+            setMode('login');
+            onAuthChange();
+          }
+        }
       }
     } catch (err: any) {
-      setError(err.message || 'An authentication error occurred.');
+      if (err.message && err.message.toLowerCase().includes('rate limit')) {
+        setError('Supabase Email Rate Limit Exceeded. Turn off "Confirm Email" in Supabase Auth settings to log in instantly without rate limits!');
+      } else {
+        setError(err.message || 'An authentication error occurred.');
+      }
     } finally {
       setLoading(false);
     }
@@ -128,7 +150,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           >
             <AlertCircle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong>Supabase Setup Required:</strong> Add your keys to <code>.env</code> file. Currently operating in local offline mode.
+              <strong>Supabase Setup Required:</strong> Add your keys to <code>.env</code> file.
             </div>
           </div>
         )}
@@ -182,7 +204,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   gap: '6px',
                 }}
               >
-                <AlertCircle size={16} />
+                <AlertCircle size={16} style={{ flexShrink: 0 }} />
                 <span>{error}</span>
               </div>
             )}
