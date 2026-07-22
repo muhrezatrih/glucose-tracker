@@ -13,7 +13,6 @@ import {
   Menu,
   X,
   BarChart2,
-  Lock,
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -85,7 +84,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
           </div>
 
-          {/* Desktop Navigation Links & Actions (Hidden on Mobile) */}
+          {/* Desktop Navigation Links & Actions */}
           <div
             className="desktop-only"
             style={{
@@ -152,7 +151,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </button>
           </div>
 
-          {/* Mobile Right Action Bar (Try Demo Pill + Hamburger Menu Icon) */}
+          {/* Mobile Right Action Bar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="mobile-only">
             <button
               onClick={onLaunchDemo}
@@ -248,31 +247,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </nav>
 
       {/* Main SaaS Landing Container */}
-      <main style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 20px 90px 20px' }}>
-        {/* PRO SAAS HERO SECTION */}
-        <section style={{ textAlign: 'center', marginBottom: '60px' }}>
-          {/* Security & Compliance Trust Badge */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 16px',
-              borderRadius: 'var(--radius-full)',
-              background: 'var(--before-bg)',
-              color: 'var(--before-color)',
-              border: '1px solid var(--before-border)',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              letterSpacing: '-0.01em',
-              marginBottom: '24px',
-            }}
-          >
-            <Lock size={14} />
-            <span>Enterprise-Grade Encryption • Private Cloud Sync • Zero Latency</span>
-          </div>
-
-          {/* SaaS Headline */}
+      <main style={{ maxWidth: '960px', margin: '0 auto', padding: '30px 20px 90px 20px' }}>
+        {/* HERO SECTION */}
+        <section style={{ textAlign: 'center', marginBottom: '50px' }}>
+          {/* Headline */}
           <h1
             style={{
               fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)',
@@ -367,22 +345,25 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </section>
 
-        {/* INTERACTIVE LIVE PREVIEW WIDGET */}
+        {/* NEAT INTERACTIVE LIVE PREVIEW WIDGET */}
         <section style={{ marginBottom: '70px' }}>
           <div
             className="glass-card"
             style={{
-              padding: '26px',
+              padding: '24px',
               borderRadius: '16px',
               background: 'var(--bg-card)',
               border: '1px solid var(--border-card)',
             }}
           >
+            {/* Header with clean flex wrap */}
             <div
               style={{
                 display: 'flex',
+                flexWrap: 'wrap',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                gap: '12px',
                 marginBottom: '16px',
               }}
             >
@@ -397,19 +378,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
               <button
                 onClick={onLaunchDemo}
+                className="btn btn-secondary"
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'var(--primary)',
+                  padding: '6px 14px',
                   fontSize: '0.82rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
+                  height: '34px',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                Full Demo App <ChevronRight size={16} />
+                Launch Full App <ChevronRight size={15} />
               </button>
             </div>
 

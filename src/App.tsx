@@ -153,44 +153,56 @@ export function App() {
   // App Dashboard View (Logged-in users or Guest Demo mode)
   return (
     <div className="app-container">
-      {/* Clean Demo Mode Header Indicator */}
+      {/* Pic 3: Centered Demo Banner with Back Button */}
       {!user && (
         <div
           style={{
             background: 'var(--none-bg)',
             border: '1px solid rgba(59, 130, 246, 0.3)',
             borderRadius: 'var(--radius-sm)',
-            padding: '10px 14px',
+            padding: '8px 12px',
             fontSize: '0.82rem',
             color: 'var(--none-color)',
             marginBottom: '16px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '10px',
+            position: 'relative',
+            minHeight: '44px',
           }}
         >
+          {/* Back to Landing Page Button */}
           <button
             onClick={() => setCurrentView('landing')}
+            className="btn btn-secondary"
             style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--none-color)',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: 0,
+              padding: '5px 12px',
+              fontSize: '0.78rem',
+              height: '32px',
+              minHeight: '32px',
+              gap: '4px',
+              zIndex: 2,
             }}
           >
-            <ArrowLeft size={16} />
-            Exit Demo to Landing Page
+            <ArrowLeft size={14} />
+            Back to Landing Page
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-            <Info size={14} style={{ flexShrink: 0 }} />
+          {/* Centered Title */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              color: 'var(--none-color)',
+              flex: 1,
+              textAlign: 'center',
+            }}
+          >
+            <Info size={14} className="desktop-only" />
             <span>Interactive Demo Mode (Sample Data)</span>
           </div>
         </div>

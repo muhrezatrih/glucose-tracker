@@ -210,11 +210,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               Your blood sugar records are safely synced to your private cloud database.
             </p>
 
+            {/* Red Sign Out Button */}
             <button
               onClick={handleSignOut}
               disabled={loading}
-              className="btn btn-secondary"
-              style={{ width: '100%', padding: '12px' }}
+              className="btn"
+              style={{
+                width: '100%',
+                padding: '12px',
+                background: 'var(--danger)',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)',
+              }}
             >
               <LogOut size={18} />
               Sign Out
