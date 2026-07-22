@@ -153,7 +153,7 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
                 className={`pill-btn ${mealState === 'none' ? 'active-primary' : ''}`}
                 onClick={() => setMealState('none')}
               >
-                ⚪ General / Fasting
+                ⚪ General
               </button>
             </div>
           </div>
