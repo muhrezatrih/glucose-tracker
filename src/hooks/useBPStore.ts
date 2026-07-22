@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { BPReading, MealStats, ViewPeriod } from '../types/bp';
 import { generateSampleData } from '../utils/sampleData';
+import { getLocalDateString } from '../utils/dateUtils';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
@@ -49,7 +50,6 @@ export const useBPStore = () => {
         }));
         setReadings(mapped);
       } else if (currentLocalReadings.length > 0) {
-        // If Supabase is empty for this user, sync local readings to Supabase!
         const payload = currentLocalReadings.map((r) => ({
           user_id: userId,
           value: r.value,
@@ -262,6 +262,7 @@ export const useBPStore = () => {
     return false;
   };
 
+  // Local timezone safe filter logic
   const filterByPeriod = (
     items: BPReading[],
     period: ViewPeriod,
@@ -269,15 +270,16 @@ export const useBPStore = () => {
     customStartStr?: string,
     customEndStr?: string
   ) => {
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = getLocalDateString(new Date());
+    const targetDateStr = selectedDateStr || todayStr;
     const now = new Date();
 
     return items.filter((r) => {
       const itemDate = new Date(r.timestamp);
-      const itemDateStr = itemDate.toISOString().split('T')[0];
+      const itemDateStr = getLocalDateString(itemDate);
 
       if (period === 'today') {
-        return itemDateStr === (selectedDateStr || todayStr);
+        return itemDateStr === targetDateStr;
       } else if (period === 'thisMonth') {
         return itemDate.getFullYear() === now.getFullYear() && itemDate.getMonth() === now.getMonth();
       } else if (period === 'lastMonth') {

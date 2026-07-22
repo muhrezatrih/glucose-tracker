@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Check, Utensils, Clock, MessageSquare, AlertCircle } from 'lucide-react';
 import type { MealState, MealType, BPReading } from '../types/bp';
+import { getLocalDatetimeInputValue } from '../utils/dateUtils';
 
 interface QuickLogModalProps {
   isOpen: boolean;
@@ -27,17 +28,13 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
       setValue(editingReading.value.toString());
       setMealState(editingReading.mealState);
       setMealType(editingReading.mealType);
-      setTimestamp(new Date(editingReading.timestamp).toISOString().slice(0, 16));
+      setTimestamp(getLocalDatetimeInputValue(editingReading.timestamp));
       setNotes(editingReading.notes || '');
     } else {
       setValue('');
       setMealState('before');
       setMealType('breakfast');
-      const now = new Date();
-      const localIso = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-        .toISOString()
-        .slice(0, 16);
-      setTimestamp(localIso);
+      setTimestamp(getLocalDatetimeInputValue());
       setNotes('');
     }
     setError('');
