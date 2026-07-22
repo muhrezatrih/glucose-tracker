@@ -13,6 +13,7 @@ import {
 import type { ChartOptions } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import type { BPReading, ViewMode } from '../types/bp';
+import { getLocalDateString } from '../utils/dateUtils';
 import { Droplet, TrendingUp, ArrowUp, ArrowDown } from 'lucide-react';
 
 ChartJS.register(
@@ -101,13 +102,13 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = getLocalDateString(d);
       const dayLabel = d.toLocaleDateString([], { weekday: 'short', month: 'numeric', day: 'numeric' });
       past7Days.push({ dateStr, label: dayLabel, before: [], after: [] });
     }
 
     allReadings.forEach((r) => {
-      const dateStr = new Date(r.timestamp).toISOString().split('T')[0];
+      const dateStr = getLocalDateString(r.timestamp);
       const found = past7Days.find((day) => day.dateStr === dateStr);
       if (found) {
         if (r.mealState === 'before') found.before.push(r.value);
@@ -156,13 +157,13 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
     for (let i = 29; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = getLocalDateString(d);
       const dayLabel = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
       past30Days.push({ dateStr, label: dayLabel, before: [], after: [] });
     }
 
     allReadings.forEach((r) => {
-      const dateStr = new Date(r.timestamp).toISOString().split('T')[0];
+      const dateStr = getLocalDateString(r.timestamp);
       const found = past30Days.find((day) => day.dateStr === dateStr);
       if (found) {
         if (r.mealState === 'before') found.before.push(r.value);
@@ -257,6 +258,8 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
     },
   };
 
+  const isToday = selectedDate === getLocalDateString(new Date());
+
   return (
     <div className="glass-card" style={{ padding: '16px', marginBottom: '16px' }}>
       {/* Header Title & Segmented View Switcher */}
@@ -269,7 +272,7 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
             </h3>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               {viewMode === 'daily'
-                ? `24h Timeline for ${selectedDate}`
+                ? `24h Timeline for ${isToday ? 'Today' : selectedDate}`
                 : viewMode === 'weekly'
                 ? `7-Day Pre vs Post Meal Trend`
                 : `30-Day Pre vs Post Meal Trend`}

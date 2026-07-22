@@ -7,18 +7,19 @@ import { QuickLogModal } from './components/QuickLogModal';
 import { AuthModal } from './components/AuthModal';
 import { BottomNav } from './components/BottomNav';
 import { useBPStore } from './hooks/useBPStore';
+import { getLocalDateString } from './utils/dateUtils';
 import type { ViewPeriod, BPReading } from './types/bp';
 import { Plus } from 'lucide-react';
 
 export function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [selectedDate, setSelectedDate] = useState<string>(
-    new Date().toISOString().split('T')[0]
+    getLocalDateString(new Date())
   );
   
   const [period, setPeriod] = useState<ViewPeriod>('today');
   
-  const nowStr = new Date().toISOString().split('T')[0];
+  const nowStr = getLocalDateString(new Date());
   const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
     .toISOString()
     .split('T')[0];
@@ -79,8 +80,9 @@ export function App() {
     setEditingReading(null);
   };
 
+  const todayStr = getLocalDateString(new Date());
   const periodLabelMap: Record<ViewPeriod, string> = {
-    today: selectedDate,
+    today: selectedDate === todayStr ? 'Today' : selectedDate,
     thisMonth: 'This Month',
     lastMonth: 'Last Month',
     custom: `${customStartDate} to ${customEndDate}`,
@@ -112,7 +114,7 @@ export function App() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '20px',
+          marginBottom: '16px',
         }}
       >
         <button
