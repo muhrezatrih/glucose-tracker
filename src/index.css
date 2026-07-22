@@ -110,10 +110,21 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Desktop Only Responsive Helper */
-@media (max-width: 639px) {
+/* Desktop & Mobile Responsive Helpers */
+.desktop-only {
+  display: flex !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
   .desktop-only {
     display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
   }
 }
 

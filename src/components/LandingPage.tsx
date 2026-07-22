@@ -12,6 +12,8 @@ import {
   Sun,
   Moon,
   ChevronRight,
+  Menu,
+  X,
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -28,8 +30,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   toggleTheme,
 }) => {
   const [activeTab, setActiveTab] = useState<'pre' | 'post' | 'delta'>('pre');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -40,8 +44,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         style={{
           position: 'sticky',
           top: 0,
-          zIndex: 90,
-          background: theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.85)',
+          zIndex: 95,
+          background: theme === 'dark' ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)',
           backdropFilter: 'blur(20px) saturate(180%)',
           WebkitBackdropFilter: 'blur(20px) saturate(180%)',
           borderBottom: '1px solid var(--border-card)',
@@ -57,35 +61,36 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             justifyContent: 'space-between',
           }}
         >
-          {/* Apple Logo Style Header */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Logo & Brand Name */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
             <div
               style={{
                 width: '34px',
                 height: '34px',
                 borderRadius: '9px',
-                background: 'linear-gradient(180deg, #30D158 0%, #28B84C 100%)',
+                background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(48, 209, 88, 0.35)',
+                boxShadow: '0 2px 10px rgba(16, 185, 129, 0.35)',
+                flexShrink: 0,
               }}
             >
               <Droplet color="#FFFFFF" size={18} />
             </div>
             <div>
-              <span style={{ fontSize: '1.15rem', fontWeight: 700, letterSpacing: '-0.02em' }}>
+              <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                 Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
               </span>
             </div>
           </div>
 
-          {/* Nav Links & Apple Capsule Actions */}
+          {/* Desktop Navigation Links & Actions (Hidden on Mobile) */}
           <div
+            className="desktop-only"
             style={{
-              display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '16px',
             }}
           >
             <button
@@ -94,21 +99,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 background: 'none',
                 border: 'none',
                 color: 'var(--text-secondary)',
-                fontSize: '0.85rem',
-                fontWeight: 500,
+                fontSize: '0.88rem',
+                fontWeight: 600,
                 cursor: 'pointer',
               }}
             >
               Features
             </button>
+
             <button
               onClick={() => scrollToSection('how-it-works')}
               style={{
                 background: 'none',
                 border: 'none',
                 color: 'var(--text-secondary)',
-                fontSize: '0.85rem',
-                fontWeight: 500,
+                fontSize: '0.88rem',
+                fontWeight: 600,
                 cursor: 'pointer',
               }}
             >
@@ -122,7 +128,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               title="Toggle Theme"
               style={{ width: '36px', height: '36px', minHeight: '36px' }}
             >
-              {theme === 'dark' ? <Sun size={15} color="#FF9F0A" /> : <Moon size={15} color="#0A84FF" />}
+              {theme === 'dark' ? <Sun size={15} color="#F59E0B" /> : <Moon size={15} color="#3B82F6" />}
             </button>
 
             {/* Launch Demo App Capsule */}
@@ -145,7 +151,100 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Sign In
             </button>
           </div>
+
+          {/* Mobile Right Action Bar (Try Demo Pill + Hamburger Menu Icon) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className="mobile-only">
+            <button
+              onClick={onLaunchDemo}
+              className="btn btn-primary"
+              style={{ padding: '6px 12px', fontSize: '0.78rem', height: '34px', minHeight: '34px' }}
+            >
+              <Play size={12} />
+              Try Demo
+            </button>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="btn btn-secondary btn-icon"
+              style={{ width: '34px', height: '34px', minHeight: '34px' }}
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
         </div>
+
+        {/* Apple-Style Responsive Mobile Dropdown Drawer */}
+        {isMobileMenuOpen && (
+          <div
+            style={{
+              paddingTop: '16px',
+              paddingBottom: '12px',
+              borderTop: '1px solid var(--border-card)',
+              marginTop: '12px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              animation: 'fadeIn 0.2s ease forwards',
+            }}
+          >
+            <button
+              onClick={() => scrollToSection('features')}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-primary)',
+                fontSize: '1rem',
+                fontWeight: 600,
+                textAlign: 'left',
+                padding: '8px 4px',
+                cursor: 'pointer',
+              }}
+            >
+              Features
+            </button>
+
+            <button
+              onClick={() => scrollToSection('how-it-works')}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-primary)',
+                fontSize: '1rem',
+                fontWeight: 600,
+                textAlign: 'left',
+                padding: '8px 4px',
+                cursor: 'pointer',
+              }}
+            >
+              How It Works
+            </button>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '8px', borderTop: '1px solid var(--border-card)' }}>
+              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Switch Theme</span>
+              <button
+                onClick={toggleTheme}
+                className="btn btn-secondary"
+                style={{ padding: '6px 14px', fontSize: '0.82rem', height: '36px' }}
+              >
+                {theme === 'dark' ? <Sun size={15} color="#F59E0B" /> : <Moon size={15} color="#3B82F6" />}
+                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </button>
+            </div>
+
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onOpenAuthModal();
+              }}
+              className="btn btn-secondary"
+              style={{ width: '100%', padding: '12px', fontSize: '0.92rem', marginTop: '4px' }}
+            >
+              <UserIcon size={16} />
+              Sign In / Create Account
+            </button>
+          </div>
+        )}
       </nav>
 
       {/* Main Apple Landing Container */}
