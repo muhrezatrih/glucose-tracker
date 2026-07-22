@@ -35,8 +35,6 @@ export function App() {
     addReading,
     updateReading,
     deleteReading,
-    clearAllData,
-    loadSampleData,
     exportToCSV,
     filterByPeriod,
     calculateMealStats,
@@ -105,8 +103,6 @@ export function App() {
         customEndDate={customEndDate}
         setCustomEndDate={setCustomEndDate}
         onExportCSV={exportToCSV}
-        onLoadSample={loadSampleData}
-        onClearAllData={clearAllData}
         user={user}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
       />
