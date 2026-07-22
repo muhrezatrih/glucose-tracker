@@ -149,16 +149,16 @@ export function App() {
   // App Dashboard View (Logged-in users or Guest Demo mode)
   return (
     <div className="app-container">
-      {/* Guest Demo Navigation Bar */}
+      {/* Clean Demo Mode Header Indicator (No redundant sign in button) */}
       {!user && (
         <div
           style={{
-            background: 'rgba(59, 130, 246, 0.12)',
+            background: 'var(--none-bg)',
             border: '1px solid rgba(59, 130, 246, 0.3)',
             borderRadius: 'var(--radius-sm)',
             padding: '10px 14px',
             fontSize: '0.82rem',
-            color: '#60A5FA',
+            color: 'var(--none-color)',
             marginBottom: '16px',
             display: 'flex',
             alignItems: 'center',
@@ -171,45 +171,24 @@ export function App() {
             style={{
               background: 'none',
               border: 'none',
-              color: '#93C5FD',
-              fontSize: '0.8rem',
+              color: 'var(--none-color)',
+              fontSize: '0.82rem',
               fontWeight: 600,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: '6px',
               padding: 0,
             }}
           >
             <ArrowLeft size={16} />
-            Back to Landing Page
+            Exit Demo to Landing Page
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
             <Info size={14} style={{ flexShrink: 0 }} />
-            <span>Interactive Demo Mode</span>
+            <span>Interactive Demo Mode (Sample Data)</span>
           </div>
-
-          <button
-            onClick={() => setIsAuthModalOpen(true)}
-            style={{
-              background: 'rgba(59, 130, 246, 0.25)',
-              border: '1px solid rgba(59, 130, 246, 0.4)',
-              color: '#FFFFFF',
-              padding: '4px 10px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.78rem',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <UserIcon size={13} />
-            Sign In
-          </button>
         </div>
       )}
 
@@ -245,8 +224,7 @@ export function App() {
             width: '100%',
             padding: '14px',
             fontSize: '1rem',
-            background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-            boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
+            fontWeight: 700,
           }}
         >
           {user ? <Plus size={20} /> : <UserIcon size={18} />}
