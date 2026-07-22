@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, LogIn, UserPlus, LogOut, Mail, Lock, ShieldCheck, AlertCircle } from 'lucide-react';
+import { X, LogIn, UserPlus, LogOut, User as UserIcon, Lock, ShieldCheck, AlertCircle } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
@@ -17,7 +17,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onAuthChange,
 }) => {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
-  const [email, setEmail] = useState('');
+  const [usernameInput, setUsernameInput] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,10 +25,25 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   if (!isOpen) return null;
 
+  // Helper to normalize username (e.g. 'reza' -> 'reza@glucosepulse.app')
+  const getAuthEmail = (input: string): string => {
+    const trimmed = input.trim().toLowerCase();
+    if (trimmed.includes('@')) {
+      return trimmed;
+    }
+    return `${trimmed}@glucosepulse.app`;
+  };
+
+  const getUserDisplayName = (emailStr?: string): string => {
+    if (!emailStr) return 'User';
+    const name = emailStr.split('@')[0];
+    return name;
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please enter email and password.');
+    if (!usernameInput || !password) {
+      setError('Please enter username and password.');
       return;
     }
 
@@ -37,6 +52,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       return;
     }
 
+    const email = getAuthEmail(usernameInput);
     setLoading(true);
     setError('');
     setMessage('');
@@ -48,7 +64,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           password,
         });
         if (loginError) throw loginError;
-        setMessage('Successfully logged in!');
+        setMessage(`Logged in as ${getUserDisplayName(email)}!`);
         onAuthChange();
         setTimeout(() => onClose(), 800);
       } else {
@@ -62,19 +78,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         });
         if (signUpError) throw signUpError;
 
-        // If email confirmation is disabled in Supabase, user gets instant session!
         if (signUpData.session) {
-          setMessage('Account created and logged in!');
+          setMessage(`Account created! Welcome, ${getUserDisplayName(email)}.`);
           onAuthChange();
           setTimeout(() => onClose(), 800);
         } else {
-          // Attempt automatic sign-in if account is created
+          // Attempt automatic sign-in if email confirmation is turned off
           const { error: autoSignInErr } = await supabase.auth.signInWithPassword({
             email,
             password,
           });
           if (!autoSignInErr) {
-            setMessage('Account created and logged in!');
+            setMessage(`Account created! Welcome, ${getUserDisplayName(email)}.`);
             onAuthChange();
             setTimeout(() => onClose(), 800);
           } else {
@@ -108,6 +123,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setLoading(false);
     }
   };
+
+  const displayName = getUserDisplayName(user?.email);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -170,13 +187,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 margin: '0 auto 12px',
                 fontSize: '1.5rem',
                 fontWeight: 700,
+                textTransform: 'uppercase',
               }}
             >
-              {user.email?.charAt(0).toUpperCase()}
+              {displayName.charAt(0)}
             </div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '4px' }}>{user.email}</div>
+            <div style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '4px', textTransform: 'capitalize' }}>
+              {displayName}
+            </div>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '24px' }}>
-              Your blood sugar records are safely synced to your private Supabase database.
+              Your blood sugar records are safely synced to your private cloud database.
             </p>
 
             <button
@@ -225,15 +245,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
             <div>
               <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                <Mail size={15} />
-                Email Address
+                <UserIcon size={15} />
+                Username (or Email)
               </label>
               <input
-                type="email"
+                type="text"
                 required
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="e.g. reza"
+                value={usernameInput}
+                onChange={(e) => setUsernameInput(e.target.value)}
                 style={{
                   width: '100%',
                   padding: '12px 14px',

@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header style={{ marginBottom: '20px' }}>
-      {/* Top Bar */}
+      {/* Top Header Bar */}
       <div
         style={{
           display: 'flex',
@@ -73,26 +73,37 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Tidy Action Controls Row (Account, Download, Theme Toggle) */}
+        {/* Tidy Icon Action Bar (Account Avatar Icon Only, Download, Theme Toggle) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-          {/* Account Button */}
+          {/* Avatar Icon Only */}
           <button
             onClick={onOpenAuthModal}
-            className="btn btn-secondary"
-            title={user ? `Logged in as ${user.email}` : 'Sign In / Account Sync'}
+            className="btn btn-secondary btn-icon"
+            title={user ? `Account (${user.email})` : 'Sign In / Account'}
             style={{
-              padding: '6px 10px',
-              fontSize: '0.8rem',
+              width: '36px',
               height: '36px',
               minHeight: '36px',
-              borderColor: user ? 'var(--before-border)' : undefined,
               borderRadius: 'var(--radius-sm)',
+              position: 'relative',
+              borderColor: user ? 'var(--before-border)' : undefined,
+              background: user ? 'var(--before-bg)' : undefined,
             }}
           >
-            <UserIcon size={15} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
-            <span style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {user ? user.email?.split('@')[0] : 'Sign In'}
-            </span>
+            <UserIcon size={17} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
+            {user && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '4px',
+                  right: '4px',
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: 'var(--before-color)',
+                }}
+              />
+            )}
           </button>
 
           {/* Export CSV */}
