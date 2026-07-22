@@ -22,50 +22,51 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
     switch (type) {
       case 'breakfast':
         return {
-          icon: <SunMedium size={13} />,
+          icon: <SunMedium size={12} />,
           label: 'Breakfast',
-          color: '#F59E0B',
-          bg: 'rgba(245, 158, 11, 0.15)',
-          border: 'rgba(245, 158, 11, 0.3)',
+          color: '#FF9F0A',
+          bg: 'rgba(255, 159, 10, 0.15)',
+          border: 'rgba(255, 159, 10, 0.3)',
         };
       case 'lunch':
         return {
-          icon: <Utensils size={13} />,
+          icon: <Utensils size={12} />,
           label: 'Lunch',
-          color: '#06B6D4',
-          bg: 'rgba(6, 182, 212, 0.15)',
-          border: 'rgba(6, 182, 212, 0.3)',
+          color: '#64D2FF',
+          bg: 'rgba(100, 210, 255, 0.15)',
+          border: 'rgba(100, 210, 255, 0.3)',
         };
       case 'dinner':
         return {
-          icon: <Moon size={13} />,
+          icon: <Moon size={12} />,
           label: 'Dinner',
-          color: '#8B5CF6',
-          bg: 'rgba(139, 92, 246, 0.15)',
-          border: 'rgba(139, 92, 246, 0.3)',
+          color: '#BF5AF2',
+          bg: 'rgba(191, 90, 242, 0.15)',
+          border: 'rgba(191, 90, 242, 0.3)',
         };
       case 'snack':
         return {
-          icon: <Apple size={13} />,
+          icon: <Apple size={12} />,
           label: 'Snack',
-          color: '#F43F5E',
-          bg: 'rgba(244, 63, 94, 0.15)',
-          border: 'rgba(244, 63, 94, 0.3)',
+          color: '#FF453A',
+          bg: 'rgba(255, 69, 58, 0.15)',
+          border: 'rgba(255, 69, 58, 0.3)',
         };
       case 'fasting':
       default:
         return {
-          icon: <Zap size={13} />,
+          icon: <Zap size={12} />,
           label: 'Fasting',
-          color: '#3B82F6',
-          bg: 'rgba(59, 130, 246, 0.15)',
-          border: 'rgba(59, 130, 246, 0.3)',
+          color: '#0A84FF',
+          bg: 'rgba(10, 132, 255, 0.15)',
+          border: 'rgba(10, 132, 255, 0.3)',
         };
     }
   };
 
   return (
     <div className="glass-card" style={{ padding: '18px' }}>
+      {/* Header Bar */}
       <div
         style={{
           display: 'flex',
@@ -76,11 +77,12 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
           marginBottom: '14px',
         }}
       >
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '-0.01em' }}>
           <Clock size={18} color="var(--primary)" />
           Log History ({filtered.length})
         </h3>
 
+        {/* Filter Pills */}
         <div style={{ display: 'flex', gap: '6px' }}>
           <button
             onClick={() => setFilterState('all')}
@@ -109,11 +111,11 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
       </div>
 
       {filtered.length === 0 ? (
-        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', textAlign: 'center', padding: '20px 0' }}>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', textAlign: 'center', padding: '24px 0' }}>
           No log entries match your filter.
         </p>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {filtered.map((item) => {
             const dateObj = new Date(item.timestamp);
             const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -126,9 +128,9 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
               <div
                 key={item.id}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  background: 'rgba(255, 255, 255, 0.04)',
                   border: '1px solid var(--border-card)',
-                  borderRadius: 'var(--radius-sm)',
+                  borderRadius: '14px',
                   padding: '12px 14px',
                   display: 'flex',
                   alignItems: 'center',
@@ -137,10 +139,10 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
                   transition: 'background 0.2s ease',
                 }}
               >
-                {/* Left side: Value, Dot, Meal Badge */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                {/* Left side: Value, Indicator Dot, Meal Category */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                   {/* Glucose Number */}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', minWidth: '60px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', minWidth: '64px' }}>
                     <span
                       style={{
                         fontSize: '1.5rem',
@@ -161,12 +163,12 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
                   </div>
 
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                      {/* Clean Colored Dot for Meal Timing (Green for Before Eat, Orange for After Eat) */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
+                      {/* Clean Timing Indicator Dot */}
                       <span
                         style={{
-                          width: '10px',
-                          height: '10px',
+                          width: '9px',
+                          height: '9px',
                           borderRadius: '50%',
                           background:
                             item.mealState === 'before'
@@ -176,30 +178,23 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
                               : 'var(--none-color)',
                           boxShadow:
                             item.mealState === 'before'
-                              ? '0 0 8px rgba(16, 185, 129, 0.5)'
+                              ? '0 0 8px rgba(48, 209, 88, 0.5)'
                               : item.mealState === 'after'
-                              ? '0 0 8px rgba(245, 158, 11, 0.5)'
+                              ? '0 0 8px rgba(255, 159, 10, 0.5)'
                               : 'none',
                           flexShrink: 0,
                         }}
-                        title={
-                          item.mealState === 'before'
-                            ? 'Before Eat'
-                            : item.mealState === 'after'
-                            ? 'After Eat'
-                            : 'General'
-                        }
                       />
 
-                      {/* Distinct Meal Category Color Badge (Breakfast, Lunch, Dinner, Snack) */}
+                      {/* Meal Category Badge */}
                       <span
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '4px',
-                          padding: '3px 8px',
+                          padding: '2px 7px',
                           borderRadius: 'var(--radius-full)',
-                          fontSize: '0.75rem',
+                          fontSize: '0.74rem',
                           fontWeight: 600,
                           background: mealCat.bg,
                           color: mealCat.color,
@@ -218,7 +213,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({ readings, onEdit, onDe
                     </div>
 
                     {item.notes && (
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '3px', fontStyle: 'italic' }}>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px', fontStyle: 'italic' }}>
                         "{item.notes}"
                       </div>
                     )}

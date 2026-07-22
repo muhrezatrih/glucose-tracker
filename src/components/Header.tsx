@@ -34,9 +34,11 @@ export const Header: React.FC<HeaderProps> = ({
   user,
   onOpenAuthModal,
 }) => {
+  const userDisplayName = user?.email ? user.email.split('@')[0] : null;
+
   return (
     <header style={{ marginBottom: '16px' }}>
-      {/* Top Header Bar */}
+      {/* Top Header Row */}
       <div
         style={{
           display: 'flex',
@@ -46,88 +48,86 @@ export const Header: React.FC<HeaderProps> = ({
           gap: '8px',
         }}
       >
-        {/* Logo & Title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+        {/* Logo & Subtitle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div
             style={{
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               borderRadius: '10px',
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+              background: 'linear-gradient(180deg, #30D158 0%, #28B84C 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)',
+              boxShadow: '0 4px 14px rgba(48, 209, 88, 0.35)',
               flexShrink: 0,
             }}
           >
-            <Droplet color="#FFFFFF" size={19} />
+            <Droplet color="#FFFFFF" size={20} />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.5px', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
               Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
             </h1>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
               Blood Sugar Tracker
             </p>
           </div>
         </div>
 
-        {/* Action Buttons (Avatar Icon, Export, Theme Toggle) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+        {/* Action Controls (Profile, Export CSV, Theme Toggle) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {/* User Profile Button */}
           <button
             onClick={onOpenAuthModal}
-            className="btn btn-secondary btn-icon"
-            title={user ? `Account (${user.email})` : 'Sign In / Account'}
+            className="btn btn-secondary"
+            title={user ? `Logged in as ${user.email}` : 'Sign In / Account'}
             style={{
-              width: '36px',
+              padding: '6px 12px',
               height: '36px',
               minHeight: '36px',
-              borderRadius: 'var(--radius-sm)',
-              position: 'relative',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              gap: '6px',
               borderColor: user ? 'var(--before-border)' : undefined,
               background: user ? 'var(--before-bg)' : undefined,
             }}
           >
-            <UserIcon size={16} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
-            {user && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '4px',
-                  right: '4px',
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: 'var(--before-color)',
-                }}
-              />
+            <UserIcon size={15} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
+            {userDisplayName ? (
+              <span style={{ textTransform: 'capitalize', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {userDisplayName}
+              </span>
+            ) : (
+              <span>Sign In</span>
             )}
           </button>
 
+          {/* Export CSV */}
           <button
             onClick={onExportCSV}
             className="btn btn-secondary btn-icon"
             title="Export CSV Logs"
-            style={{ width: '36px', height: '36px', minHeight: '36px', borderRadius: 'var(--radius-sm)' }}
+            style={{ width: '36px', height: '36px', minHeight: '36px' }}
           >
             <Download size={15} />
           </button>
 
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="btn btn-secondary btn-icon"
             title="Toggle Light/Dark Theme"
-            style={{ width: '36px', height: '36px', minHeight: '36px', borderRadius: 'var(--radius-sm)' }}
+            style={{ width: '36px', height: '36px', minHeight: '36px' }}
           >
-            {theme === 'dark' ? <Sun size={16} color="#F59E0B" /> : <Moon size={16} color="#6366F1" />}
+            {theme === 'dark' ? <Sun size={15} color="#FF9F0A" /> : <Moon size={15} color="#0A84FF" />}
           </button>
         </div>
       </div>
 
-      {/* Sleek Timeframe Filter Control Card (Saves 150px Vertical Space) */}
+      {/* Sleek Integrated Timeframe Filter Control Bar */}
       <div className="glass-card" style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {/* Horizontal 1-Row Segmented Control Bar */}
         <div className="segmented-control">
           <button
             onClick={() => setPeriod('today')}
@@ -159,17 +159,17 @@ export const Header: React.FC<HeaderProps> = ({
         {period === 'today' && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', paddingTop: '2px' }}>
             <Calendar size={14} color="var(--text-muted)" />
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Date:</span>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Selected Date:</span>
             <input
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
               style={{
-                background: 'rgba(0,0,0,0.2)',
+                background: 'rgba(0,0,0,0.3)',
                 border: '1px solid var(--border-card)',
                 color: 'var(--text-primary)',
                 padding: '3px 8px',
-                borderRadius: '6px',
+                borderRadius: '8px',
                 fontSize: '0.8rem',
                 outline: 'none',
                 fontFamily: 'inherit',
@@ -196,11 +196,11 @@ export const Header: React.FC<HeaderProps> = ({
                 value={customStartDate}
                 onChange={(e) => setCustomStartDate(e.target.value)}
                 style={{
-                  background: 'rgba(0,0,0,0.2)',
+                  background: 'rgba(0,0,0,0.3)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
                   padding: '3px 6px',
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
@@ -215,11 +215,11 @@ export const Header: React.FC<HeaderProps> = ({
                 value={customEndDate}
                 onChange={(e) => setCustomEndDate(e.target.value)}
                 style={{
-                  background: 'rgba(0,0,0,0.2)',
+                  background: 'rgba(0,0,0,0.3)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
                   padding: '3px 6px',
-                  borderRadius: '6px',
+                  borderRadius: '8px',
                   fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
