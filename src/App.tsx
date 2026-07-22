@@ -49,10 +49,14 @@ export function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // If user logs in, automatically show real App Dashboard
+  // Sync currentView with user auth status:
+  // Logged-in -> 'app' Dashboard view
+  // Logged-out -> 'landing' Landing Page view
   useEffect(() => {
     if (user) {
       setCurrentView('app');
+    } else {
+      setCurrentView('landing');
     }
   }, [user]);
 
@@ -149,7 +153,7 @@ export function App() {
   // App Dashboard View (Logged-in users or Guest Demo mode)
   return (
     <div className="app-container">
-      {/* Clean Demo Mode Header Indicator (No redundant sign in button) */}
+      {/* Clean Demo Mode Header Indicator */}
       {!user && (
         <div
           style={{
