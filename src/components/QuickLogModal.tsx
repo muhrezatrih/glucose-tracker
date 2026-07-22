@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Check, Utensils, Clock, MessageSquare, AlertCircle } from 'lucide-react';
 import type { MealState, MealType, BPReading } from '../types/bp';
-import { getLocalDatetimeInputValue } from '../utils/dateUtils';
+import { getLocalDatetimeInputValue, parseLocalDatetimeInput } from '../utils/dateUtils';
 
 interface QuickLogModalProps {
   isOpen: boolean;
@@ -51,7 +51,9 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
       return;
     }
 
-    const isoDate = timestamp ? new Date(timestamp).toISOString() : new Date().toISOString();
+    // Cross-browser safe local timezone parsing (Safari/Chrome/iOS)
+    const dateObj = timestamp ? parseLocalDatetimeInput(timestamp) : new Date();
+    const isoDate = dateObj.toISOString();
 
     onSave({
       value: numValue,
