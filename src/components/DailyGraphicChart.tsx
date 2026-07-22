@@ -90,8 +90,8 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
         pointBackgroundColor: pointBgColors,
         pointBorderColor: pointBorderColors,
         pointBorderWidth: 2,
-        pointRadius: 7,
-        pointHoverRadius: 9,
+        pointRadius: 6,
+        pointHoverRadius: 8,
       },
     ];
   } else if (viewMode === 'weekly') {
@@ -137,7 +137,7 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
         backgroundColor: 'rgba(16, 185, 129, 0.2)',
         borderWidth: 3,
         tension: 0.3,
-        pointRadius: 6,
+        pointRadius: 5,
       },
       {
         label: 'Post-Meal Avg (After Eat)',
@@ -146,7 +146,7 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
         backgroundColor: 'rgba(245, 158, 11, 0.2)',
         borderWidth: 3,
         tension: 0.3,
-        pointRadius: 6,
+        pointRadius: 5,
       },
     ];
   } else {
@@ -229,7 +229,7 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
         bodyColor: '#CBD5E1',
         borderColor: 'rgba(255,255,255,0.1)',
         borderWidth: 1,
-        padding: 12,
+        padding: 10,
       },
     },
     scales: {
@@ -249,7 +249,7 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
         },
         ticks: {
           color: '#94A3B8',
-          font: { size: 11 },
+          font: { size: 10 },
         },
         suggestedMin: 70,
         suggestedMax: 200,
@@ -258,48 +258,49 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
   };
 
   return (
-    <div className="glass-card" style={{ padding: '20px', marginBottom: '20px' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Droplet color="var(--before-color)" size={20} />
-            Blood Sugar Statistics & Graphics
-          </h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            {viewMode === 'daily'
-              ? `24h Timeline for ${selectedDate}`
-              : viewMode === 'weekly'
-              ? `7-Day Pre/Post Meal Trend`
-              : `30-Day Pre/Post Meal Trend`}
-          </p>
+    <div className="glass-card" style={{ padding: '16px', marginBottom: '16px' }}>
+      {/* Header Title & Segmented View Switcher */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Droplet color="var(--before-color)" size={18} />
+              Statistics & Trends
+            </h3>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              {viewMode === 'daily'
+                ? `24h Timeline for ${selectedDate}`
+                : viewMode === 'weekly'
+                ? `7-Day Pre vs Post Meal Trend`
+                : `30-Day Pre vs Post Meal Trend`}
+            </p>
+          </div>
         </div>
 
-        <div className="pill-group" style={{ margin: 0 }}>
+        {/* 1-Row Horizontal Segmented Control for Chart Mode */}
+        <div className="segmented-control">
           <button
             onClick={() => setViewMode('daily')}
-            className={`pill-btn ${viewMode === 'daily' ? 'active-primary' : ''}`}
-            style={{ padding: '6px 12px', fontSize: '0.82rem', minWidth: '70px' }}
+            className={`segmented-control-item ${viewMode === 'daily' ? 'active' : ''}`}
           >
             Daily
           </button>
           <button
             onClick={() => setViewMode('weekly')}
-            className={`pill-btn ${viewMode === 'weekly' ? 'active-primary' : ''}`}
-            style={{ padding: '6px 12px', fontSize: '0.82rem', minWidth: '75px' }}
+            className={`segmented-control-item ${viewMode === 'weekly' ? 'active' : ''}`}
           >
             Weekly
           </button>
           <button
             onClick={() => setViewMode('monthly')}
-            className={`pill-btn ${viewMode === 'monthly' ? 'active-primary' : ''}`}
-            style={{ padding: '6px 12px', fontSize: '0.82rem', minWidth: '75px' }}
+            className={`segmented-control-item ${viewMode === 'monthly' ? 'active' : ''}`}
           >
             Monthly
           </button>
         </div>
       </div>
 
-      <div style={{ height: '240px', position: 'relative', width: '100%' }}>
+      <div style={{ height: '210px', position: 'relative', width: '100%' }}>
         {totalCount === 0 ? (
           <div
             style={{
@@ -310,12 +311,12 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
               alignItems: 'center',
               justifyContent: 'center',
               color: 'var(--text-muted)',
-              gap: '8px',
+              gap: '6px',
             }}
           >
-            <TrendingUp size={32} strokeWidth={1.5} />
-            <p style={{ fontSize: '0.9rem' }}>No blood sugar records for this {viewMode} view.</p>
-            <p style={{ fontSize: '0.78rem' }}>Tap "+" to record blood sugar!</p>
+            <TrendingUp size={28} strokeWidth={1.5} />
+            <p style={{ fontSize: '0.85rem' }}>No blood sugar records for this {viewMode} view.</p>
+            <p style={{ fontSize: '0.75rem' }}>Tap "+ Record Blood Sugar" below!</p>
           </div>
         ) : (
           <Line data={chartData} options={options} />
@@ -327,33 +328,33 @@ export const DailyGraphicChart: React.FC<GraphicChartProps> = ({
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '12px',
-            marginTop: '20px',
-            paddingTop: '16px',
+            gap: '8px',
+            marginTop: '14px',
+            paddingTop: '12px',
             borderTop: '1px solid var(--border-card)',
             textAlign: 'center',
           }}
         >
           <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-              <ArrowDown size={14} color="var(--before-color)" /> Min Glucose
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
+              <ArrowDown size={12} color="var(--before-color)" /> Min
             </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>
-              {minVal} <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{viewMode.toUpperCase()} AVERAGE</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--before-color)' }}>
-              {avgVal} <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
+            <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>
+              {minVal} <span style={{ fontSize: '0.7rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
             </div>
           </div>
           <div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-              <ArrowUp size={14} color="var(--danger)" /> Max Glucose
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{viewMode.toUpperCase()} AVG</div>
+            <div style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--before-color)' }}>
+              {avgVal} <span style={{ fontSize: '0.7rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
             </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>
-              {maxVal} <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
+          </div>
+          <div>
+            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
+              <ArrowUp size={12} color="var(--danger)" /> Max
+            </div>
+            <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>
+              {maxVal} <span style={{ fontSize: '0.7rem', fontWeight: 500, color: 'var(--text-muted)' }}>mg/dL</span>
             </div>
           </div>
         </div>

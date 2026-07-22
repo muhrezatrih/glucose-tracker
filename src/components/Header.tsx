@@ -35,14 +35,14 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuthModal,
 }) => {
   return (
-    <header style={{ marginBottom: '20px' }}>
+    <header style={{ marginBottom: '16px' }}>
       {/* Top Header Bar */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: '16px',
+          marginBottom: '12px',
           gap: '8px',
         }}
       >
@@ -50,8 +50,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           <div
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
               borderRadius: '10px',
               background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
               display: 'flex',
@@ -61,21 +61,20 @@ export const Header: React.FC<HeaderProps> = ({
               flexShrink: 0,
             }}
           >
-            <Droplet color="#FFFFFF" size={20} />
+            <Droplet color="#FFFFFF" size={19} />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.5px', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.5px', lineHeight: 1.1 }}>
               Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
             </h1>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
               Blood Sugar Tracker
             </p>
           </div>
         </div>
 
-        {/* Tidy Icon Action Bar (Account Avatar Icon Only, Download, Theme Toggle) */}
+        {/* Action Buttons (Avatar Icon, Export, Theme Toggle) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-          {/* Avatar Icon Only */}
           <button
             onClick={onOpenAuthModal}
             className="btn btn-secondary btn-icon"
@@ -90,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
               background: user ? 'var(--before-bg)' : undefined,
             }}
           >
-            <UserIcon size={17} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
+            <UserIcon size={16} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
             {user && (
               <span
                 style={{
@@ -106,96 +105,91 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Export CSV */}
           <button
             onClick={onExportCSV}
             className="btn btn-secondary btn-icon"
             title="Export CSV Logs"
             style={{ width: '36px', height: '36px', minHeight: '36px', borderRadius: 'var(--radius-sm)' }}
           >
-            <Download size={16} />
+            <Download size={15} />
           </button>
 
-          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="btn btn-secondary btn-icon"
             title="Toggle Light/Dark Theme"
             style={{ width: '36px', height: '36px', minHeight: '36px', borderRadius: 'var(--radius-sm)' }}
           >
-            {theme === 'dark' ? <Sun size={17} color="#F59E0B" /> : <Moon size={17} color="#6366F1" />}
+            {theme === 'dark' ? <Sun size={16} color="#F59E0B" /> : <Moon size={16} color="#6366F1" />}
           </button>
         </div>
       </div>
 
-      {/* Date & Period Filter Controls */}
-      <div className="glass-card" style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div className="pill-group" style={{ margin: 0 }}>
-            <button
-              onClick={() => setPeriod('today')}
-              className={`pill-btn ${period === 'today' ? 'active-primary' : ''}`}
-              style={{ minWidth: '65px', padding: '5px 10px', fontSize: '0.8rem' }}
-            >
-              Today
-            </button>
-            <button
-              onClick={() => setPeriod('thisMonth')}
-              className={`pill-btn ${period === 'thisMonth' ? 'active-primary' : ''}`}
-              style={{ minWidth: '85px', padding: '5px 10px', fontSize: '0.8rem' }}
-            >
-              This Month
-            </button>
-            <button
-              onClick={() => setPeriod('lastMonth')}
-              className={`pill-btn ${period === 'lastMonth' ? 'active-primary' : ''}`}
-              style={{ minWidth: '85px', padding: '5px 10px', fontSize: '0.8rem' }}
-            >
-              Last Month
-            </button>
-            <button
-              onClick={() => setPeriod('custom')}
-              className={`pill-btn ${period === 'custom' ? 'active-primary' : ''}`}
-              style={{ minWidth: '90px', padding: '5px 10px', fontSize: '0.8rem' }}
-            >
-              Custom
-            </button>
-          </div>
-
-          {period === 'today' && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Calendar size={15} color="var(--text-muted)" />
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                style={{
-                  background: 'rgba(0,0,0,0.2)',
-                  border: '1px solid var(--border-card)',
-                  color: 'var(--text-primary)',
-                  padding: '4px 8px',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.82rem',
-                  outline: 'none',
-                  fontFamily: 'inherit',
-                }}
-              />
-            </div>
-          )}
+      {/* Sleek Timeframe Filter Control Card (Saves 150px Vertical Space) */}
+      <div className="glass-card" style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {/* Horizontal 1-Row Segmented Control Bar */}
+        <div className="segmented-control">
+          <button
+            onClick={() => setPeriod('today')}
+            className={`segmented-control-item ${period === 'today' ? 'active' : ''}`}
+          >
+            Today
+          </button>
+          <button
+            onClick={() => setPeriod('thisMonth')}
+            className={`segmented-control-item ${period === 'thisMonth' ? 'active' : ''}`}
+          >
+            This Month
+          </button>
+          <button
+            onClick={() => setPeriod('lastMonth')}
+            className={`segmented-control-item ${period === 'lastMonth' ? 'active' : ''}`}
+          >
+            Last Month
+          </button>
+          <button
+            onClick={() => setPeriod('custom')}
+            className={`segmented-control-item ${period === 'custom' ? 'active' : ''}`}
+          >
+            Custom
+          </button>
         </div>
+
+        {/* Date Selector Row */}
+        {period === 'today' && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px', paddingTop: '2px' }}>
+            <Calendar size={14} color="var(--text-muted)" />
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Date:</span>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              style={{
+                background: 'rgba(0,0,0,0.2)',
+                border: '1px solid var(--border-card)',
+                color: 'var(--text-primary)',
+                padding: '3px 8px',
+                borderRadius: '6px',
+                fontSize: '0.8rem',
+                outline: 'none',
+                fontFamily: 'inherit',
+              }}
+            />
+          </div>
+        )}
 
         {period === 'custom' && (
           <div
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
               alignItems: 'center',
-              gap: '10px',
-              paddingTop: '8px',
+              justifyContent: 'space-between',
+              gap: '8px',
+              paddingTop: '6px',
               borderTop: '1px solid var(--border-card)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
               <span>From:</span>
               <input
                 type="date"
@@ -205,16 +199,16 @@ export const Header: React.FC<HeaderProps> = ({
                   background: 'rgba(0,0,0,0.2)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
-                  padding: '4px 8px',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.82rem',
+                  padding: '3px 6px',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
                 }}
               />
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
               <span>To:</span>
               <input
                 type="date"
@@ -224,9 +218,9 @@ export const Header: React.FC<HeaderProps> = ({
                   background: 'rgba(0,0,0,0.2)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
-                  padding: '4px 8px',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.82rem',
+                  padding: '3px 6px',
+                  borderRadius: '6px',
+                  fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
                 }}

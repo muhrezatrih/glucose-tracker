@@ -28,7 +28,7 @@
   --danger: #EF4444;
   --danger-bg: rgba(239, 68, 68, 0.15);
 
-  --radius-sm: 10px;
+  --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-full: 9999px;
@@ -162,41 +162,73 @@ body {
   border-radius: var(--radius-sm);
 }
 
-/* Pill Selectors */
-.pill-group {
+/* iOS Style Horizontal Segmented Controls (Replaces Vertically Stacked Towers) */
+.segmented-control {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-card);
+  width: 100%;
 }
 
+.segmented-control-item {
+  flex: 1;
+  padding: 6px 4px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease-smooth), color 0.2s var(--ease-smooth), transform 0.15s var(--ease-spring);
+}
+
+.segmented-control-item:active {
+  transform: scale(0.96);
+}
+
+.segmented-control-item.active {
+  background: var(--bg-card-hover);
+  color: var(--before-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Grid Pill Selectors */
 .pill-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .pill-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
-@media (max-width: 400px) {
-  .pill-grid-4 {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 420px) {
+  .segmented-control-item {
+    font-size: 0.73rem;
+    padding: 6px 2px;
   }
 }
 
 .pill-btn {
   width: 100%;
-  padding: 10px 8px;
+  padding: 8px 6px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-card);
   background: rgba(255, 255, 255, 0.04);
   color: var(--text-secondary);
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   cursor: pointer;
   display: flex;
   align-items: center;
