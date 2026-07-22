@@ -4,76 +4,95 @@ export const generateSampleData = (): BPReading[] => {
   const readings: BPReading[] = [];
   const now = new Date();
   
-  const formatDate = (d: Date) => d.toISOString().split('T')[0];
+  // Helper to format ISO timestamp with specific hour & minute on a given date
+  const createTimestamp = (date: Date, hours: number, minutes: number): string => {
+    const d = new Date(date);
+    d.setHours(hours, minutes, 0, 0);
+    return d.toISOString();
+  };
 
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(now);
-    date.setDate(now.getDate() - i);
-    const dateStr = formatDate(date);
+  // 1. TODAY READINGS (Fresh relative to current date)
+  const today = new Date(now);
+  readings.push({
+    id: 'sample-today-1',
+    value: 108,
+    mealState: 'before',
+    mealType: 'breakfast',
+    timestamp: createTimestamp(today, 7, 30),
+    notes: 'Oatmeal & black coffee',
+  });
+  readings.push({
+    id: 'sample-today-2',
+    value: 145,
+    mealState: 'after',
+    mealType: 'breakfast',
+    timestamp: createTimestamp(today, 9, 30),
+    notes: '2h post breakfast check',
+  });
+  readings.push({
+    id: 'sample-today-3',
+    value: 112,
+    mealState: 'before',
+    mealType: 'lunch',
+    timestamp: createTimestamp(today, 12, 15),
+    notes: 'Grilled chicken salad',
+  });
+  readings.push({
+    id: 'sample-today-4',
+    value: 138,
+    mealState: 'after',
+    mealType: 'lunch',
+    timestamp: createTimestamp(today, 14, 15),
+    notes: 'Post lunch walk completed',
+  });
 
-    const baseOffset = (i % 3) * 3;
+  // 2. THIS MONTH READINGS (Generate readings across past 14 days)
+  for (let i = 1; i <= 14; i++) {
+    const pastDate = new Date(now);
+    pastDate.setDate(now.getDate() - i);
 
-    // Fasting / Before Breakfast (07:30 AM)
-    const bBefore = new Date(`${dateStr}T07:30:00`);
+    // Variation simulation
+    const beforeVal = Math.floor(95 + Math.random() * 25);
+    const afterVal = Math.floor(beforeVal + 25 + Math.random() * 30);
+
     readings.push({
-      id: `sample-${i}-b-before`,
-      value: 98 + baseOffset,
+      id: `sample-this-month-b-${i}`,
+      value: beforeVal,
       mealState: 'before',
-      mealType: 'breakfast',
-      timestamp: bBefore.toISOString(),
-      notes: 'Fasting blood sugar before breakfast',
+      mealType: i % 2 === 0 ? 'breakfast' : 'lunch',
+      timestamp: createTimestamp(pastDate, 8, 0),
     });
-
-    // 2h Post Breakfast (09:30 AM)
-    const bAfter = new Date(`${dateStr}T09:30:00`);
     readings.push({
-      id: `sample-${i}-b-after`,
-      value: 142 + baseOffset + Math.floor(Math.random() * 5),
+      id: `sample-this-month-a-${i}`,
+      value: afterVal,
       mealState: 'after',
-      mealType: 'breakfast',
-      timestamp: bAfter.toISOString(),
-      notes: '2 hours post oatmeal & fruit',
+      mealType: i % 2 === 0 ? 'breakfast' : 'lunch',
+      timestamp: createTimestamp(pastDate, 10, 0),
     });
+  }
 
-    // Before Lunch (12:15 PM)
-    const lBefore = new Date(`${dateStr}T12:15:00`);
-    readings.push({
-      id: `sample-${i}-l-before`,
-      value: 104 + baseOffset,
-      mealState: 'before',
-      mealType: 'lunch',
-      timestamp: lBefore.toISOString(),
-    });
+  // 3. LAST MONTH READINGS (Generate readings for previous month)
+  const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 15);
+  for (let i = 1; i <= 10; i++) {
+    const d = new Date(lastMonthDate);
+    d.setDate(d.getDate() - i);
 
-    // 2h Post Lunch (02:15 PM)
-    const lAfter = new Date(`${dateStr}T14:15:00`);
-    readings.push({
-      id: `sample-${i}-l-after`,
-      value: 158 + baseOffset,
-      mealState: 'after',
-      mealType: 'lunch',
-      timestamp: lAfter.toISOString(),
-      notes: 'Post pasta lunch',
-    });
+    const beforeVal = Math.floor(98 + Math.random() * 20);
+    const afterVal = Math.floor(beforeVal + 30 + Math.random() * 25);
 
-    // Before Dinner (06:30 PM)
-    const dBefore = new Date(`${dateStr}T18:30:00`);
     readings.push({
-      id: `sample-${i}-d-before`,
-      value: 101 + baseOffset,
+      id: `sample-last-month-b-${i}`,
+      value: beforeVal,
       mealState: 'before',
       mealType: 'dinner',
-      timestamp: dBefore.toISOString(),
+      timestamp: createTimestamp(d, 18, 30),
     });
-
-    // 2h Post Dinner (08:30 PM)
-    const dAfter = new Date(`${dateStr}T20:30:00`);
     readings.push({
-      id: `sample-${i}-d-after`,
-      value: 148 + baseOffset,
+      id: `sample-last-month-a-${i}`,
+      value: afterVal,
       mealState: 'after',
       mealType: 'dinner',
-      timestamp: dAfter.toISOString(),
+      timestamp: createTimestamp(d, 20, 30),
     });
   }
 
