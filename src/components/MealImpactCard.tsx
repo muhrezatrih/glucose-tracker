@@ -20,21 +20,22 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
         </h3>
       </div>
 
-      {/* Grid of 2 Cards: Before Eat & After Eat */}
-      <div className="grid-2" style={{ marginBottom: '14px' }}>
+      {/* Side by Side Grid for Before Eat & After Eat (Desktop & Tablet) */}
+      <div className="meal-impact-grid" style={{ marginBottom: '14px' }}>
         {/* Pre-Meal Card */}
         <div
           style={{
             background: 'var(--before-bg)',
             border: '1px solid var(--before-border)',
-            borderRadius: '14px',
-            padding: '14px 16px',
+            borderRadius: '16px',
+            padding: '16px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
+            gap: '8px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--before-color)', boxShadow: '0 0 8px rgba(48, 209, 88, 0.6)' }} />
             <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--before-color)', letterSpacing: '0.02em' }}>
               BEFORE EAT (PRE-MEAL AVG)
@@ -42,13 +43,13 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
           </div>
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-            <span style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--before-color)', fontVariantNumeric: 'tabular-nums' }}>
+            <span style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--before-color)', fontVariantNumeric: 'tabular-nums' }}>
               {beforeAvg !== null ? beforeAvg : '--'}
             </span>
             <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--before-color)', opacity: 0.85 }}>mg/dL</span>
           </div>
 
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
             {beforeCount} {beforeCount === 1 ? 'reading' : 'readings'}
           </div>
         </div>
@@ -58,14 +59,15 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
           style={{
             background: 'var(--after-bg)',
             border: '1px solid var(--after-border)',
-            borderRadius: '14px',
-            padding: '14px 16px',
+            borderRadius: '16px',
+            padding: '16px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
+            gap: '8px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--after-color)', boxShadow: '0 0 8px rgba(255, 159, 10, 0.6)' }} />
             <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--after-color)', letterSpacing: '0.02em' }}>
               AFTER EAT (POST-MEAL AVG)
@@ -73,13 +75,13 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
           </div>
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-            <span style={{ fontSize: '1.85rem', fontWeight: 800, color: 'var(--after-color)', fontVariantNumeric: 'tabular-nums' }}>
+            <span style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--after-color)', fontVariantNumeric: 'tabular-nums' }}>
               {afterAvg !== null ? afterAvg : '--'}
             </span>
             <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--after-color)', opacity: 0.85 }}>mg/dL</span>
           </div>
 
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
             {afterCount} {afterCount === 1 ? 'reading' : 'readings'}
           </div>
         </div>
@@ -88,9 +90,9 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
       {/* Delta Row */}
       <div
         style={{
-          background: 'rgba(0, 0, 0, 0.3)',
+          background: 'rgba(0, 0, 0, 0.35)',
           border: '1px solid var(--border-card)',
-          borderRadius: '12px',
+          borderRadius: '14px',
           padding: '12px 16px',
           display: 'flex',
           alignItems: 'center',
@@ -114,7 +116,7 @@ export const MealImpactCard: React.FC<MealImpactCardProps> = ({ stats, periodNam
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
               <span
                 style={{
-                  fontSize: '1.4rem',
+                  fontSize: '1.45rem',
                   fontWeight: 800,
                   color: delta > 0 ? 'var(--after-color)' : 'var(--before-color)',
                   fontVariantNumeric: 'tabular-nums',

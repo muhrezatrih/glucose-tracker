@@ -13,12 +13,12 @@
   
   /* Apple Health Palette (Dark Mode) */
   --before-color: #30D158;
-  --before-bg: rgba(48, 209, 88, 0.15);
-  --before-border: rgba(48, 209, 88, 0.35);
+  --before-bg: rgba(48, 209, 88, 0.12);
+  --before-border: rgba(48, 209, 88, 0.3);
 
   --after-color: #FF9F0A;
-  --after-bg: rgba(255, 159, 10, 0.15);
-  --after-border: rgba(255, 159, 10, 0.35);
+  --after-bg: rgba(255, 159, 10, 0.12);
+  --after-border: rgba(255, 159, 10, 0.3);
 
   --none-color: #0A84FF;
   --none-bg: rgba(10, 132, 255, 0.15);
@@ -59,12 +59,12 @@
 
   /* Apple Health Palette (Light Mode) */
   --before-color: #34C759;
-  --before-bg: rgba(52, 199, 89, 0.12);
-  --before-border: rgba(52, 199, 89, 0.3);
+  --before-bg: rgba(52, 199, 89, 0.1);
+  --before-border: rgba(52, 199, 89, 0.25);
 
   --after-color: #FF9500;
-  --after-bg: rgba(255, 149, 0, 0.12);
-  --after-border: rgba(255, 149, 0, 0.3);
+  --after-bg: rgba(255, 149, 0, 0.1);
+  --after-border: rgba(255, 149, 0, 0.25);
 
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
 }
@@ -211,6 +211,19 @@ body {
   background: #FFFFFF;
   color: #1D1D1F;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Side by Side Responsive Grid for Meal Impact Cards */
+.meal-impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 500px) {
+  .meal-impact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Grid Pill Selectors */
@@ -377,6 +390,54 @@ input[type="password"] {
 @keyframes slideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
+}
+
+/* Floating Action Button (FAB) - Mobile Only, Hidden Completely on Desktop */
+.fab-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #34C759 0%, #28B84C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(48, 209, 88, 0.45);
+  border: none;
+  cursor: pointer;
+  z-index: 90;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.fab-add:hover {
+  transform: scale(1.08);
+}
+
+.fab-add:active {
+  transform: scale(0.92);
+}
+
+/* Hide floating FAB on Desktop (min-width: 768px) so no year-2000 button appears */
+@media (min-width: 768px) {
+  .fab-add {
+    display: none !important;
+  }
+}
+
+/* Grid layout */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 500px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Apple Bento Grid Utilities */
