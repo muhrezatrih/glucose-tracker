@@ -41,7 +41,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           position: 'sticky',
           top: 0,
           zIndex: 90,
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.85)',
           backdropFilter: 'blur(20px) saturate(180%)',
           WebkitBackdropFilter: 'blur(20px) saturate(180%)',
           borderBottom: '1px solid var(--border-card)',
@@ -160,9 +160,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               gap: '6px',
               padding: '6px 16px',
               borderRadius: 'var(--radius-full)',
-              background: 'rgba(48, 209, 88, 0.12)',
+              background: 'var(--before-bg)',
               color: 'var(--before-color)',
-              border: '1px solid rgba(48, 209, 88, 0.3)',
+              border: '1px solid var(--before-border)',
               fontSize: '0.82rem',
               fontWeight: 600,
               letterSpacing: '-0.01em',
@@ -173,7 +173,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span>Apple Health Inspired • Private Cloud Sync</span>
           </div>
 
-          {/* Apple Gradient Typography Headline */}
+          {/* Apple Typography Headline */}
           <h1
             style={{
               fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)',
@@ -188,7 +188,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span
               style={{
                 color: 'var(--before-color)',
-                textShadow: '0 0 30px rgba(48, 209, 88, 0.45)',
+                textShadow: theme === 'dark' ? '0 0 30px rgba(48, 209, 88, 0.45)' : 'none',
               }}
             >
               Elevated.
@@ -227,7 +227,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 padding: '14px 28px',
                 fontSize: '1.02rem',
                 borderRadius: 'var(--radius-full)',
-                boxShadow: '0 6px 20px rgba(48, 209, 88, 0.4)',
               }}
             >
               <Play size={18} />
@@ -281,8 +280,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             style={{
               padding: '26px',
               borderRadius: '24px',
-              background: 'linear-gradient(145deg, rgba(48, 209, 88, 0.12) 0%, rgba(28, 28, 30, 0.95) 100%)',
-              border: '1px solid rgba(48, 209, 88, 0.3)',
+              background: theme === 'dark' ? 'linear-gradient(145deg, rgba(48, 209, 88, 0.12) 0%, rgba(28, 28, 30, 0.95) 100%)' : '#FFFFFF',
+              border: '1px solid var(--border-card)',
             }}
           >
             <div
@@ -345,13 +344,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {/* Active Segment Output Card */}
             <div
               style={{
-                background: 'rgba(0, 0, 0, 0.4)',
+                background: theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : '#F2F2F7',
                 border:
                   activeTab === 'pre'
-                    ? '1px solid rgba(48, 209, 88, 0.4)'
+                    ? '1px solid var(--before-border)'
                     : activeTab === 'post'
-                    ? '1px solid rgba(255, 159, 10, 0.4)'
-                    : '1px solid rgba(10, 132, 255, 0.4)',
+                    ? '1px solid var(--after-border)'
+                    : '1px solid var(--border-card)',
                 borderRadius: '16px',
                 padding: '18px 20px',
                 display: 'flex',
@@ -395,14 +394,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               {activeTab === 'delta' && (
                 <>
                   <div>
-                    <div style={{ fontSize: '0.82rem', color: '#64D2FF', fontWeight: 700 }}>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--none-color)', fontWeight: 700 }}>
                       📊 MEAL IMPACT DELTA
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                       Post-Meal Average - Pre-Meal Average
                     </div>
                   </div>
-                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#64D2FF' }}>
+                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--none-color)' }}>
                     +37 <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>mg/dL</span>
                   </div>
                 </>
@@ -454,14 +453,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   width: '42px',
                   height: '42px',
                   borderRadius: '12px',
-                  background: 'rgba(100, 210, 255, 0.15)',
+                  background: 'var(--none-bg)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '16px',
                 }}
               >
-                <TrendingUp size={20} color="#64D2FF" />
+                <TrendingUp size={20} color="var(--none-color)" />
               </div>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.01em' }}>
                 24h & 30-Day Spline Trends
@@ -543,8 +542,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  background: 'rgba(100, 210, 255, 0.15)',
-                  color: '#64D2FF',
+                  background: 'var(--none-bg)',
+                  color: 'var(--none-color)',
                   fontWeight: 800,
                   fontSize: '1rem',
                   display: 'flex',
@@ -594,8 +593,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             style={{
               padding: '42px 28px',
               textAlign: 'center',
-              background: 'linear-gradient(145deg, rgba(48, 209, 88, 0.15) 0%, rgba(28, 28, 30, 0.98) 100%)',
-              border: '1px solid rgba(48, 209, 88, 0.35)',
+              background: theme === 'dark' ? 'linear-gradient(145deg, rgba(48, 209, 88, 0.15) 0%, rgba(28, 28, 30, 0.98) 100%)' : '#FFFFFF',
+              border: '1px solid var(--before-border)',
             }}
           >
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '10px', letterSpacing: '-0.02em' }}>

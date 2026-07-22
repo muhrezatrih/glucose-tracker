@@ -46,27 +46,37 @@
 }
 
 [data-theme="light"] {
-  /* Apple Light Mode Tokens */
-  --bg-main: #F5F5F7;
-  --bg-card: rgba(255, 255, 255, 0.92);
-  --bg-card-hover: rgba(255, 255, 255, 1);
+  /* Apple Signature iOS Light Mode Tokens */
+  --bg-main: #F2F2F7;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAFAFC;
   --bg-modal: #FFFFFF;
-  --border-card: rgba(0, 0, 0, 0.08);
+  --border-card: #E5E5EA;
 
-  --text-primary: #1D1D1F;
-  --text-secondary: #515154;
-  --text-muted: #86868B;
+  --text-primary: #000000;
+  --text-secondary: #3C3C43;
+  --text-muted: #6C6C70;
 
-  /* Apple Health Palette (Light Mode) */
-  --before-color: #34C759;
-  --before-bg: rgba(52, 199, 89, 0.1);
-  --before-border: rgba(52, 199, 89, 0.25);
+  /* Apple Health High-Contrast Palette (Light Mode) */
+  --before-color: #1B7A33;
+  --before-bg: #E8F8EC;
+  --before-border: #A3E7B6;
 
-  --after-color: #FF9500;
-  --after-bg: rgba(255, 149, 0, 0.1);
-  --after-border: rgba(255, 149, 0, 0.25);
+  --after-color: #B85B00;
+  --after-bg: #FFF4E5;
+  --after-border: #FFD18B;
 
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
+  --none-color: #0055B3;
+  --none-bg: #EBF3FF;
+
+  --primary: #248A3D;
+  --primary-hover: #1B662D;
+  --primary-glow: rgba(36, 138, 61, 0.25);
+
+  --danger: #D70015;
+  --danger-bg: #FFE5E7;
+
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 * {
@@ -93,15 +103,22 @@ body {
 /* Apple Translucent Glass Card (Vibrancy) */
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   transition: transform 0.2s var(--ease-apple), border-color 0.2s var(--ease-apple), box-shadow 0.2s var(--ease-apple);
 }
 
+[data-theme="dark"] .glass-card {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
 .glass-card:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .glass-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -148,6 +165,12 @@ body {
   box-shadow: 0 4px 14px var(--primary-glow);
 }
 
+[data-theme="light"] .btn-primary {
+  background: linear-gradient(180deg, #248A3D 0%, #1B662D 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(36, 138, 61, 0.3);
+}
+
 .btn-primary:hover {
   transform: scale(1.02);
   box-shadow: 0 6px 20px var(--primary-glow);
@@ -160,8 +183,19 @@ body {
   border-radius: var(--radius-full);
 }
 
+[data-theme="light"] .btn-secondary {
+  background: #FFFFFF;
+  color: var(--text-primary);
+  border: 1px solid #D1D1D6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #F2F2F7;
 }
 
 .btn-icon {
@@ -178,6 +212,10 @@ body {
   padding: 3px;
   border-radius: 12px;
   width: 100%;
+}
+
+[data-theme="light"] .segmented-control {
+  background: #E3E3E8;
 }
 
 .segmented-control-item {
@@ -209,7 +247,7 @@ body {
 
 [data-theme="light"] .segmented-control-item.active {
   background: #FFFFFF;
-  color: #1D1D1F;
+  color: #000000;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
@@ -266,6 +304,12 @@ body {
   transition: transform 0.2s var(--ease-spring), background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
+[data-theme="light"] .pill-btn {
+  background: #F2F2F7;
+  border-color: #D1D1D6;
+  color: #1C1C1E;
+}
+
 .pill-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -294,6 +338,12 @@ body {
   border-color: rgba(48, 209, 88, 0.4);
 }
 
+[data-theme="light"] .pill-btn.active-primary {
+  background: #E8F8EC;
+  color: #1B7A33;
+  border-color: #A3E7B6;
+}
+
 /* Numeric Big Input */
 .bp-input-wrapper {
   position: relative;
@@ -319,6 +369,12 @@ body {
   -webkit-appearance: none;
   appearance: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="light"] .bp-number-input {
+  background: #FFFFFF;
+  border-color: #D1D1D6;
+  color: #000000;
 }
 
 .bp-number-input:focus {
@@ -449,15 +505,22 @@ input[type="password"] {
 
 .bento-card {
   background: var(--bg-card);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--border-card);
   border-radius: 22px;
   padding: 24px;
   transition: transform 0.25s var(--ease-apple), border-color 0.25s var(--ease-apple);
 }
 
+[data-theme="dark"] .bento-card {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
 .bento-card:hover {
   transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .bento-card:hover {
   border-color: rgba(255, 255, 255, 0.25);
 }
