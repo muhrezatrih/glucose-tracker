@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header style={{ marginBottom: '16px' }}>
-      {/* Top Header Row */}
+      {/* Top Header Row - Mobile Friendly */}
       <div
         style={{
           display: 'flex',
@@ -48,42 +48,40 @@ export const Header: React.FC<HeaderProps> = ({
           gap: '8px',
         }}
       >
-        {/* Logo & Subtitle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        {/* Logo & Clean Brand Title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           <div
             style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              background: 'linear-gradient(180deg, #30D158 0%, #28B84C 100%)',
+              width: '36px',
+              height: '36px',
+              borderRadius: '9px',
+              background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(48, 209, 88, 0.35)',
+              boxShadow: '0 2px 10px rgba(16, 185, 129, 0.35)',
               flexShrink: 0,
             }}
           >
-            <Droplet color="#FFFFFF" size={20} />
+            <Droplet color="#FFFFFF" size={19} />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
               Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
             </h1>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-              Blood Sugar Tracker
-            </p>
           </div>
         </div>
 
         {/* Action Controls (Profile, Export CSV, Theme Toggle) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          {/* User Profile Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+          {/* User Profile Button - Icon-only on mobile, text-label on desktop */}
           <button
             onClick={onOpenAuthModal}
             className="btn btn-secondary"
             title={user ? `Logged in as ${user.email}` : 'Sign In / Account'}
             style={{
-              padding: '6px 12px',
+              padding: userDisplayName ? '0 10px' : '0',
+              width: userDisplayName ? 'auto' : '36px',
               height: '36px',
               minHeight: '36px',
               borderRadius: 'var(--radius-full)',
@@ -92,15 +90,29 @@ export const Header: React.FC<HeaderProps> = ({
               gap: '6px',
               borderColor: user ? 'var(--before-border)' : undefined,
               background: user ? 'var(--before-bg)' : undefined,
+              position: 'relative',
             }}
           >
-            <UserIcon size={15} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
-            {userDisplayName ? (
-              <span style={{ textTransform: 'capitalize', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <UserIcon size={16} color={user ? 'var(--before-color)' : 'var(--text-secondary)'} />
+            {userDisplayName && (
+              <span className="desktop-only" style={{ textTransform: 'capitalize', maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {userDisplayName}
               </span>
-            ) : (
-              <span>Sign In</span>
+            )}
+            {/* Green active dot for mobile signed-in users */}
+            {user && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '2px',
+                  right: '2px',
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: 'var(--before-color)',
+                  border: '1.5px solid var(--bg-card)',
+                }}
+              />
             )}
           </button>
 
@@ -121,13 +133,13 @@ export const Header: React.FC<HeaderProps> = ({
             title="Toggle Light/Dark Theme"
             style={{ width: '36px', height: '36px', minHeight: '36px' }}
           >
-            {theme === 'dark' ? <Sun size={15} color="#FF9F0A" /> : <Moon size={15} color="#0A84FF" />}
+            {theme === 'dark' ? <Sun size={15} color="#F59E0B" /> : <Moon size={15} color="#3B82F6" />}
           </button>
         </div>
       </div>
 
       {/* Sleek Integrated Timeframe Filter Control Bar */}
-      <div className="glass-card" style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div className="glass-card" style={{ padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div className="segmented-control">
           <button
             onClick={() => setPeriod('today')}
@@ -165,12 +177,12 @@ export const Header: React.FC<HeaderProps> = ({
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
               style={{
-                background: 'rgba(0,0,0,0.3)',
+                background: 'rgba(0,0,0,0.25)',
                 border: '1px solid var(--border-card)',
                 color: 'var(--text-primary)',
                 padding: '3px 8px',
-                borderRadius: '8px',
-                fontSize: '0.8rem',
+                borderRadius: '6px',
+                fontSize: '0.78rem',
                 outline: 'none',
                 fontFamily: 'inherit',
               }}
@@ -196,11 +208,11 @@ export const Header: React.FC<HeaderProps> = ({
                 value={customStartDate}
                 onChange={(e) => setCustomStartDate(e.target.value)}
                 style={{
-                  background: 'rgba(0,0,0,0.3)',
+                  background: 'rgba(0,0,0,0.25)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
                   padding: '3px 6px',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
@@ -215,11 +227,11 @@ export const Header: React.FC<HeaderProps> = ({
                 value={customEndDate}
                 onChange={(e) => setCustomEndDate(e.target.value)}
                 style={{
-                  background: 'rgba(0,0,0,0.3)',
+                  background: 'rgba(0,0,0,0.25)',
                   border: '1px solid var(--border-card)',
                   color: 'var(--text-primary)',
                   padding: '3px 6px',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   fontSize: '0.78rem',
                   outline: 'none',
                   fontFamily: 'inherit',
