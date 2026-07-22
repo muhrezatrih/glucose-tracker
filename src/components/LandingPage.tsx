@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   Droplet,
-  Sparkles,
-  TrendingUp,
   ShieldCheck,
   ArrowRight,
   Play,
@@ -14,6 +12,8 @@ import {
   ChevronRight,
   Menu,
   X,
+  BarChart2,
+  Lock,
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -39,15 +39,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-main)', color: 'var(--text-primary)' }}>
-      {/* Top Translucent Navigation Bar */}
+      {/* Top Translucent Pro Navigation Bar */}
       <nav
         style={{
           position: 'sticky',
           top: 0,
           zIndex: 95,
-          background: theme === 'dark' ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          background: theme === 'dark' ? 'rgba(11, 15, 25, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           borderBottom: '1px solid var(--border-card)',
           padding: '12px 20px',
         }}
@@ -67,8 +67,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               style={{
                 width: '34px',
                 height: '34px',
-                borderRadius: '9px',
-                background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)',
+                borderRadius: '8px',
+                background: '#10B981',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -118,7 +118,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 cursor: 'pointer',
               }}
             >
-              How It Works
+              Workflow
             </button>
 
             {/* Theme Toggle */}
@@ -174,7 +174,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
 
-        {/* Apple-Style Responsive Mobile Dropdown Drawer */}
+        {/* Mobile Dropdown Drawer */}
         {isMobileMenuOpen && (
           <div
             style={{
@@ -217,7 +217,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 cursor: 'pointer',
               }}
             >
-              How It Works
+              Workflow
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '8px', borderTop: '1px solid var(--border-card)' }}>
@@ -247,11 +247,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         )}
       </nav>
 
-      {/* Main Apple Landing Container */}
+      {/* Main SaaS Landing Container */}
       <main style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 20px 90px 20px' }}>
-        {/* APPLE HERO SECTION */}
+        {/* PRO SAAS HERO SECTION */}
         <section style={{ textAlign: 'center', marginBottom: '60px' }}>
-          {/* Apple Style Floating Pill Badge */}
+          {/* Security & Compliance Trust Badge */}
           <div
             style={{
               display: 'inline-flex',
@@ -268,11 +268,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               marginBottom: '24px',
             }}
           >
-            <Sparkles size={14} />
-            <span>Apple Health Inspired • Private Cloud Sync</span>
+            <Lock size={14} />
+            <span>Enterprise-Grade Encryption • Private Cloud Sync • Zero Latency</span>
           </div>
 
-          {/* Apple Typography Headline */}
+          {/* SaaS Headline */}
           <h1
             style={{
               fontSize: 'clamp(2.2rem, 5.5vw, 3.4rem)',
@@ -283,14 +283,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               color: 'var(--text-primary)',
             }}
           >
-            Smart Blood Sugar Tracking,{' '}
-            <span
-              style={{
-                color: 'var(--before-color)',
-                textShadow: theme === 'dark' ? '0 0 30px rgba(48, 209, 88, 0.45)' : 'none',
-              }}
-            >
-              Elevated.
+            Precision Blood Glucose Intelligence for{' '}
+            <span style={{ color: 'var(--before-color)' }}>
+              Modern Health Management.
             </span>
           </h1>
 
@@ -299,16 +294,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             style={{
               fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
               color: 'var(--text-muted)',
-              maxWidth: '680px',
+              maxWidth: '700px',
               margin: '0 auto 32px auto',
-              lineHeight: 1.47,
-              letterSpacing: '-0.015em',
+              lineHeight: 1.5,
+              letterSpacing: '-0.011em',
             }}
           >
-            Log glucose (mg/dL) in 1 tap, analyze pre vs post meal impacts, and sync seamlessly across your iPhone, Mac, and iPad.
+            Track pre- and post-meal glucose metrics, analyze glycemic variability across 24-hour timelines, and export clinical CSV reports seamlessly across all your devices.
           </p>
 
-          {/* Apple Capsule CTAs */}
+          {/* SaaS Capsule CTAs */}
           <div
             style={{
               display: 'flex',
@@ -324,12 +319,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="btn btn-primary"
               style={{
                 padding: '14px 28px',
-                fontSize: '1.02rem',
-                borderRadius: 'var(--radius-full)',
+                fontSize: '1rem',
+                fontWeight: 700,
               }}
             >
               <Play size={18} />
-              Try Interactive Demo App
+              Launch Live Demo App
             </button>
 
             <button
@@ -337,16 +332,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="btn btn-secondary"
               style={{
                 padding: '14px 26px',
-                fontSize: '1.02rem',
-                borderRadius: 'var(--radius-full)',
+                fontSize: '1rem',
+                fontWeight: 600,
               }}
             >
-              Sign In / Create Account
+              Sign In to Your Workspace
               <ArrowRight size={18} />
             </button>
           </div>
 
-          {/* Apple Checklist Pills */}
+          {/* Enterprise Value Checklist */}
           <div
             style={{
               display: 'flex',
@@ -359,27 +354,27 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={15} color="var(--before-color)" />
-              <span>Instant Username Login (`reza`)</span>
+              <span>Instant Single Sign-On (`reza`)</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={15} color="var(--before-color)" />
-              <span>Pre/Post Meal Baseline Subtraction</span>
+              <span>Pre vs Post Meal Delta Engine</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={15} color="var(--before-color)" />
-              <span>Export CSV Data Anytime</span>
+              <span>Automated Clinical CSV Exports</span>
             </div>
           </div>
         </section>
 
-        {/* APPLE INTERACTIVE MINI PREVIEW WIDGET */}
+        {/* INTERACTIVE LIVE PREVIEW WIDGET */}
         <section style={{ marginBottom: '70px' }}>
           <div
             className="glass-card"
             style={{
               padding: '26px',
-              borderRadius: '24px',
-              background: theme === 'dark' ? 'linear-gradient(145deg, rgba(48, 209, 88, 0.12) 0%, rgba(28, 28, 30, 0.95) 100%)' : '#FFFFFF',
+              borderRadius: '16px',
+              background: 'var(--bg-card)',
               border: '1px solid var(--border-card)',
             }}
           >
@@ -393,10 +388,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             >
               <div>
                 <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--before-color)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Interactive Live App Preview
+                  Interactive Live App Demo
                 </span>
                 <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginTop: '2px', letterSpacing: '-0.02em' }}>
-                  Tap segments to test pre vs post meal calculations
+                  Evaluate pre- and post-meal glucose spikes in real-time
                 </h3>
               </div>
 
@@ -414,11 +409,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   gap: '4px',
                 }}
               >
-                Full Demo <ChevronRight size={16} />
+                Full Demo App <ChevronRight size={16} />
               </button>
             </div>
 
-            {/* iOS Segmented Control Bar */}
+            {/* Segmented Control Selector */}
             <div className="segmented-control" style={{ marginBottom: '16px' }}>
               <button
                 onClick={() => setActiveTab('pre')}
@@ -443,29 +438,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {/* Active Segment Output Card */}
             <div
               style={{
-                background: theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : '#F2F2F7',
+                background: theme === 'dark' ? 'rgba(0, 0, 0, 0.4)' : '#F1F5F9',
                 border:
                   activeTab === 'pre'
                     ? '1px solid var(--before-border)'
                     : activeTab === 'post'
                     ? '1px solid var(--after-border)'
                     : '1px solid var(--border-card)',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 padding: '18px 20px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                transition: 'all 0.25s var(--ease-apple)',
+                transition: 'all 0.2s ease',
               }}
             >
               {activeTab === 'pre' && (
                 <>
                   <div>
                     <div style={{ fontSize: '0.82rem', color: 'var(--before-color)', fontWeight: 700 }}>
-                      🟢 BEFORE EAT (FASTING / PRE-MEAL)
+                      🟢 PRE-MEAL BASELINE (FASTING)
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      Breakfast • Oatmeal & Black Coffee
+                      Breakfast Baseline Entry
                     </div>
                   </div>
                   <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--before-color)' }}>
@@ -478,10 +473,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <>
                   <div>
                     <div style={{ fontSize: '0.82rem', color: 'var(--after-color)', fontWeight: 700 }}>
-                      🟠 AFTER EAT (POST-MEAL SPIKE)
+                      🟠 POST-MEAL GLUCOSE SPIKE
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                      2 Hours Post Breakfast Reading
+                      2 Hours Post-Meal Measurement
                     </div>
                   </div>
                   <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--after-color)' }}>
@@ -509,25 +504,25 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </section>
 
-        {/* APPLE BENTO GRID FEATURE HIGHLIGHTS */}
+        {/* B2B SAAS FEATURE GRID */}
         <section id="features" style={{ marginBottom: '70px' }}>
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
             <h2 style={{ fontSize: '1.7rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
-              Designed for Complete Clarity.
+              Engineered for Clinical Precision.
             </h2>
             <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-              Everything you need to understand your blood sugar patterns with zero clutter.
+              Enterprise-grade tools to track, analyze, and manage blood sugar records.
             </p>
           </div>
 
           <div className="bento-grid">
-            {/* Bento Card 1 */}
+            {/* SaaS Feature 1 */}
             <div className="bento-card">
               <div
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
                   background: 'var(--before-bg)',
                   display: 'flex',
                   alignItems: 'center',
@@ -538,20 +533,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <Utensils size={20} color="var(--before-color)" />
               </div>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.01em' }}>
-                Pre vs Post Meal Delta
+                Automated Meal Delta Engine
               </h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.47 }}>
-                Automatically subtract pre-meal baselines from post-meal readings to measure exact glucose spikes after meals.
+                Instantly calculate exact glucose deltas between pre-meal baselines and post-meal readings to identify dietary triggers.
               </p>
             </div>
 
-            {/* Bento Card 2 */}
+            {/* SaaS Feature 2 */}
             <div className="bento-card">
               <div
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
                   background: 'var(--none-bg)',
                   display: 'flex',
                   alignItems: 'center',
@@ -559,48 +554,48 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   marginBottom: '16px',
                 }}
               >
-                <TrendingUp size={20} color="var(--none-color)" />
+                <BarChart2 size={20} color="var(--none-color)" />
               </div>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.01em' }}>
-                24h & 30-Day Spline Trends
+                24h & 30-Day Longitudinal Analytics
               </h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.47 }}>
-                Switch effortlessly between 24-hour chronological daily timelines, 7-day averages, and 30-day monthly trend graphics.
+                Visualize glycemic variability across 24-hour daily timelines, 7-day moving averages, and 30-day trend analytics.
               </p>
             </div>
 
-            {/* Bento Card 3 */}
+            {/* SaaS Feature 3 */}
             <div className="bento-card">
               <div
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
-                  background: 'rgba(191, 90, 242, 0.15)',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
+                  background: 'rgba(139, 92, 246, 0.15)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '16px',
                 }}
               >
-                <ShieldCheck size={20} color="#BF5AF2" />
+                <ShieldCheck size={20} color="#8B5CF6" />
               </div>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.01em' }}>
-                Private Cloud Database
+                Isolated Multi-Tenant Database
               </h3>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.47 }}>
-                Secured by PostgreSQL Row-Level Security (RLS). Your records belong strictly to you and sync across all your devices.
+                Engineered with PostgreSQL Row-Level Security (RLS) guaranteeing absolute tenant data isolation and real-time sync.
               </p>
             </div>
           </div>
         </section>
 
-        {/* APPLE HOW IT WORKS SECTION */}
+        {/* PRO SAAS WORKFLOW SECTION */}
         <section id="how-it-works" style={{ marginBottom: '70px' }}>
           <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-            <h2 style={{ fontSize: '1.7rem', fontWeight: 800, letterSpacing: '-0.02em' }}>How It Works.</h2>
+            <h2 style={{ fontSize: '1.7rem', fontWeight: 800, letterSpacing: '-0.02em' }}>Simplified 3-Step Workflow.</h2>
             <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-              Track your glucose in 3 simple steps
+              Streamlined data entry and reporting
             </p>
           </div>
 
@@ -616,7 +611,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 style={{
                   width: '36px',
                   height: '36px',
-                  borderRadius: '50%',
+                  borderRadius: '8px',
                   background: 'var(--before-bg)',
                   color: 'var(--before-color)',
                   fontWeight: 800,
@@ -629,9 +624,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               >
                 1
               </div>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Enter Single Number</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Record Reading</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                Type your glucose number (e.g. 123) and select Before or After Eat pill.
+                Enter single blood sugar number (mg/dL) and tag meal timing with 1 tap.
               </p>
             </div>
 
@@ -640,7 +635,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 style={{
                   width: '36px',
                   height: '36px',
-                  borderRadius: '50%',
+                  borderRadius: '8px',
                   background: 'var(--none-bg)',
                   color: 'var(--none-color)',
                   fontWeight: 800,
@@ -653,9 +648,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               >
                 2
               </div>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Analyze Meal Delta</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Analyze Trends</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                View immediate pre vs post meal average differences and 24h timelines.
+                Evaluate pre vs post meal glycemic spikes and 24-hour timeline trends.
               </p>
             </div>
 
@@ -664,9 +659,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 style={{
                   width: '36px',
                   height: '36px',
-                  borderRadius: '50%',
-                  background: 'rgba(191, 90, 242, 0.15)',
-                  color: '#BF5AF2',
+                  borderRadius: '8px',
+                  background: 'rgba(139, 92, 246, 0.15)',
+                  color: '#8B5CF6',
                   fontWeight: 800,
                   fontSize: '1rem',
                   display: 'flex',
@@ -677,48 +672,48 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               >
                 3
               </div>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Sync & Export</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>Sync & Export CSV</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                Log in on any phone or laptop to access your history or export CSV files.
+                Sync records across all devices and export formatted CSV logs anytime.
               </p>
             </div>
           </div>
         </section>
 
-        {/* APPLE BOTTOM CTA FOOTER BANNER */}
+        {/* BOTTOM CTA BANNER */}
         <section>
           <div
             className="bento-card"
             style={{
               padding: '42px 28px',
               textAlign: 'center',
-              background: theme === 'dark' ? 'linear-gradient(145deg, rgba(48, 209, 88, 0.15) 0%, rgba(28, 28, 30, 0.98) 100%)' : '#FFFFFF',
+              background: 'var(--bg-card)',
               border: '1px solid var(--before-border)',
             }}
           >
             <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '10px', letterSpacing: '-0.02em' }}>
-              Ready to Track Your Blood Sugar with Ease?
+              Ready to Upgrade Your Glucose Management?
             </h2>
             <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '520px', margin: '0 auto 28px auto', lineHeight: 1.47 }}>
-              Try the interactive demo app with sample data or sign in to start saving your own personal records!
+              Test the interactive demo app with sample data or sign in to start saving your real personal records!
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
               <button
                 onClick={onLaunchDemo}
                 className="btn btn-primary"
-                style={{ padding: '14px 28px', fontSize: '1rem' }}
+                style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 700 }}
               >
                 <Play size={18} />
-                Launch Demo App
+                Launch Live Demo App
               </button>
 
               <button
                 onClick={onOpenAuthModal}
                 className="btn btn-secondary"
-                style={{ padding: '14px 28px', fontSize: '1rem' }}
+                style={{ padding: '14px 28px', fontSize: '1rem', fontWeight: 600 }}
               >
-                Sign In / Create Account
+                Sign In to Workspace
                 <ArrowRight size={18} />
               </button>
             </div>
@@ -726,9 +721,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </section>
       </main>
 
-      {/* Apple Footer */}
+      {/* Pro SaaS Footer */}
       <footer style={{ borderTop: '1px solid var(--border-card)', padding: '24px 20px', textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-        GlucosePulse Blood Sugar Tracker • Apple HIG Inspired Design System
+        GlucosePulse Health Platform • Enterprise-Grade Encryption & Data Privacy
       </footer>
     </div>
   );
