@@ -262,6 +262,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <input
                 type="text"
                 required
+                autoFocus
                 placeholder="e.g. reza"
                 value={usernameInput}
                 onChange={(e) => setUsernameInput(e.target.value)}
