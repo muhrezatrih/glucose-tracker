@@ -36,7 +36,7 @@
   --shadow-card: 0 12px 30px -5px rgba(0, 0, 0, 0.45), 0 8px 12px -6px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.3);
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -78,6 +78,8 @@ body {
   line-height: 1.5;
   overflow-x: hidden;
   font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
 }
 
@@ -118,6 +120,7 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 10px 18px;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
@@ -166,21 +169,41 @@ body {
   flex-wrap: wrap;
 }
 
+.pill-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pill-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 400px) {
+  .pill-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .pill-btn {
-  flex: 1;
-  min-width: 80px;
-  padding: 8px 12px;
+  width: 100%;
+  padding: 10px 8px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-card);
   background: rgba(255, 255, 255, 0.04);
   color: var(--text-secondary);
+  font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  text-align: center;
+  white-space: nowrap;
   transition: transform 0.2s var(--ease-spring), background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -234,6 +257,7 @@ body {
 .bp-number-input {
   width: 100%;
   padding: 16px 20px;
+  font-family: var(--font-sans);
   font-size: 2.4rem;
   font-weight: 800;
   text-align: center;
@@ -244,6 +268,8 @@ body {
   outline: none;
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
+  -webkit-appearance: none;
+  appearance: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -252,12 +278,13 @@ body {
   box-shadow: 0 0 20px var(--primary-glow);
 }
 
-/* Modal / Bottom Sheet */
+/* Modal / Bottom Sheet for iOS & Desktop */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -277,18 +304,34 @@ body {
   width: 100%;
   max-width: 500px;
   background: var(--bg-modal);
-  border-top-left-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-lg);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   border: 1px solid var(--border-card);
-  padding: 24px;
+  padding: 14px 20px 28px 20px;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   animation: slideUp 0.25s var(--ease-smooth) forwards;
 }
 
 @media (min-width: 640px) {
   .modal-content {
     border-radius: var(--radius-lg);
+    padding: 24px;
+    max-height: 85vh;
   }
+}
+
+/* iOS Datetime Input Override */
+input[type="datetime-local"],
+input[type="date"],
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  font-family: var(--font-sans) !important;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @keyframes fadeIn {

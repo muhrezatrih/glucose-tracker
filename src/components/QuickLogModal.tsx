@@ -69,12 +69,23 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        {/* Mobile iOS Sheet Top Handle */}
+        <div
+          style={{
+            width: '36px',
+            height: '4px',
+            borderRadius: '2px',
+            background: 'rgba(255, 255, 255, 0.2)',
+            margin: '0 auto 12px auto',
+          }}
+        />
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
           <div>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 700 }}>
               {editingReading ? 'Edit Blood Sugar' : 'Record Blood Sugar'}
             </h2>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
               Enter glucose number (mg/dL) & meal timing
             </p>
           </div>
@@ -88,13 +99,13 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
               padding: '6px',
             }}
           >
-            <X size={22} />
+            <X size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div className="bp-input-wrapper">
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
               Blood Sugar Number (mg/dL)
             </label>
             <input
@@ -119,10 +130,10 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
           </div>
 
           <div>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>
+            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: '6px' }}>
               Meal Timing
             </label>
-            <div className="pill-group">
+            <div className="pill-grid-3">
               <button
                 type="button"
                 className={`pill-btn ${mealState === 'before' ? 'active-before' : ''}`}
@@ -148,11 +159,11 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
           </div>
 
           <div>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-              <Utensils size={15} />
+            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+              <Utensils size={14} />
               Meal Category
             </label>
-            <div className="pill-group">
+            <div className="pill-grid-4">
               {(['breakfast', 'lunch', 'dinner', 'snack'] as MealType[]).map((type) => (
                 <button
                   key={type}
@@ -168,8 +179,8 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
           </div>
 
           <div>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-              <Clock size={15} />
+            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+              <Clock size={14} />
               Date & Time
             </label>
             <input
@@ -178,8 +189,8 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
               onChange={(e) => setTimestamp(e.target.value)}
               style={{
                 width: '100%',
-                padding: '12px 14px',
-                fontSize: '0.95rem',
+                padding: '10px 12px',
+                fontSize: '0.9rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-card)',
                 background: 'rgba(0,0,0,0.2)',
@@ -191,8 +202,8 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
           </div>
 
           <div>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-              <MessageSquare size={15} />
+            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+              <MessageSquare size={14} />
               Notes (Optional)
             </label>
             <input
@@ -202,8 +213,8 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
               onChange={(e) => setNotes(e.target.value)}
               style={{
                 width: '100%',
-                padding: '12px 14px',
-                fontSize: '0.95rem',
+                padding: '10px 12px',
+                fontSize: '0.9rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-card)',
                 background: 'rgba(0,0,0,0.2)',
@@ -216,9 +227,9 @@ export const QuickLogModal: React.FC<QuickLogModalProps> = ({
           <button
             type="submit"
             className="btn btn-primary"
-            style={{ width: '100%', padding: '14px', fontSize: '1.05rem', marginTop: '10px' }}
+            style={{ width: '100%', padding: '13px', fontSize: '1rem', marginTop: '6px' }}
           >
-            <Check size={20} />
+            <Check size={18} />
             Save Blood Sugar
           </button>
         </form>
