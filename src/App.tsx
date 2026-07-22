@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
-import { LandingHero } from './components/LandingHero';
+import { LandingPage } from './components/LandingPage';
 import { DailyGraphicChart } from './components/DailyGraphicChart';
 import { MealImpactCard } from './components/MealImpactCard';
 import { HistoryList } from './components/HistoryList';
@@ -11,10 +11,11 @@ import { useBPStore } from './hooks/useBPStore';
 import { getLocalDateString } from './utils/dateUtils';
 import { generateSampleData } from './utils/sampleData';
 import type { ViewPeriod, BPReading } from './types/bp';
-import { Plus, Info, Sparkles } from 'lucide-react';
+import { Plus, Info, ArrowLeft, User as UserIcon } from 'lucide-react';
 
 export function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [currentView, setCurrentView] = useState<'landing' | 'app'>('landing');
   const [selectedDate, setSelectedDate] = useState<string>(
     getLocalDateString(new Date())
   );
@@ -32,8 +33,6 @@ export function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [editingReading, setEditingReading] = useState<BPReading | null>(null);
 
-  const demoSectionRef = useRef<HTMLDivElement>(null);
-
   const {
     user,
     readings,
@@ -50,11 +49,18 @@ export function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
+  // If user logs in, automatically show real App Dashboard
+  useEffect(() => {
+    if (user) {
+      setCurrentView('app');
+    }
+  }, [user]);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // If user is guest (null), load dynamic sample data for demo preview
+  // If user is guest (null), load dynamic sample data for demo mode
   const displayReadings = user ? readings : generateSampleData();
 
   const filteredReadings = filterByPeriod(
@@ -109,10 +115,6 @@ export function App() {
     setEditingReading(null);
   };
 
-  const handleScrollToDemo = () => {
-    demoSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const todayStr = getLocalDateString(new Date());
   const periodLabelMap: Record<ViewPeriod, string> = {
     today: selectedDate === todayStr ? 'Today' : selectedDate,
@@ -124,8 +126,93 @@ export function App() {
     all: 'All Time',
   };
 
+  // Render Dedicated Landing Page for non-logged-in visitors when currentView === 'landing'
+  if (!user && currentView === 'landing') {
+    return (
+      <>
+        <LandingPage
+          onLaunchDemo={() => setCurrentView('app')}
+          onOpenAuthModal={() => setIsAuthModalOpen(true)}
+          theme={theme}
+          toggleTheme={toggleTheme}
+        />
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+          user={user}
+          onAuthChange={refetch}
+        />
+      </>
+    );
+  }
+
+  // App Dashboard View (Logged-in users or Guest Demo mode)
   return (
     <div className="app-container">
+      {/* Guest Demo Navigation Bar */}
+      {!user && (
+        <div
+          style={{
+            background: 'rgba(59, 130, 246, 0.12)',
+            border: '1px solid rgba(59, 130, 246, 0.3)',
+            borderRadius: 'var(--radius-sm)',
+            padding: '10px 14px',
+            fontSize: '0.82rem',
+            color: '#60A5FA',
+            marginBottom: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '10px',
+          }}
+        >
+          <button
+            onClick={() => setCurrentView('landing')}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#93C5FD',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: 0,
+            }}
+          >
+            <ArrowLeft size={16} />
+            Back to Landing Page
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Info size={14} style={{ flexShrink: 0 }} />
+            <span>Interactive Demo Mode</span>
+          </div>
+
+          <button
+            onClick={() => setIsAuthModalOpen(true)}
+            style={{
+              background: 'rgba(59, 130, 246, 0.25)',
+              border: '1px solid rgba(59, 130, 246, 0.4)',
+              color: '#FFFFFF',
+              padding: '4px 10px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <UserIcon size={13} />
+            Sign In
+          </button>
+        </div>
+      )}
+
       <Header
         theme={theme}
         toggleTheme={toggleTheme}
@@ -142,59 +229,7 @@ export function App() {
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
       />
 
-      {/* Landing Hero for Non-Logged-In Visitors */}
-      {!user && (
-        <LandingHero
-          onOpenAuthModal={() => setIsAuthModalOpen(true)}
-          onScrollToDemo={handleScrollToDemo}
-        />
-      )}
-
-      {/* Guest Mode Info Banner */}
-      {!user && (
-        <div
-          ref={demoSectionRef}
-          style={{
-            background: 'rgba(59, 130, 246, 0.12)',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            borderRadius: 'var(--radius-sm)',
-            padding: '12px 14px',
-            fontSize: '0.82rem',
-            color: '#60A5FA',
-            marginBottom: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '10px',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Info size={16} style={{ flexShrink: 0 }} />
-            <span>
-              <strong>Interactive Demo Mode:</strong> Exploring dynamically generated sample data. Sign in to save your personal records!
-            </span>
-          </div>
-          <button
-            onClick={() => setIsAuthModalOpen(true)}
-            style={{
-              background: 'rgba(59, 130, 246, 0.2)',
-              border: '1px solid rgba(59, 130, 246, 0.4)',
-              color: '#93C5FD',
-              padding: '4px 10px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.78rem',
-              fontWeight: 600,
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
-            }}
-          >
-            Sign In
-          </button>
-        </div>
-      )}
-
-      {/* Record Blood Sugar Primary CTA */}
+      {/* Record Blood Sugar Primary Button */}
       <div
         style={{
           display: 'flex',
@@ -214,7 +249,7 @@ export function App() {
             boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
           }}
         >
-          {user ? <Plus size={20} /> : <Sparkles size={18} />}
+          {user ? <Plus size={20} /> : <UserIcon size={18} />}
           {user ? 'Record Blood Sugar' : 'Sign In to Record Blood Sugar'}
         </button>
       </div>
