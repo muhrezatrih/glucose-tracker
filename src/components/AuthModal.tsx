@@ -52,9 +52,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         onAuthChange();
         setTimeout(() => onClose(), 800);
       } else {
+        // Redirect email confirmation link dynamically to current web app URL
+        const redirectUrl = window.location.origin;
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            emailRedirectTo: redirectUrl,
+          },
         });
         if (signUpError) throw signUpError;
         setMessage('Account created! Check your email to confirm registration or log in now.');
@@ -123,7 +128,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           >
             <AlertCircle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong>Supabase Setup Required:</strong> To enable multi-device cloud sync, add your Supabase keys to <code>.env</code> file (VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY). Currently operating in local offline mode.
+              <strong>Supabase Setup Required:</strong> Add your keys to <code>.env</code> file. Currently operating in local offline mode.
             </div>
           </div>
         )}

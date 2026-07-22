@@ -9,7 +9,6 @@ const STORAGE_KEY = 'bp_tracker_readings_v1';
 export const useBPStore = () => {
   const [user, setUser] = useState<User | null>(null);
   
-  // Default to empty array [] so user starts completely fresh!
   const [readings, setReadings] = useState<BPReading[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -25,7 +24,7 @@ export const useBPStore = () => {
     return [];
   });
 
-  const fetchSupabaseReadings = useCallback(async (userId: string) => {
+  const fetchSupabaseReadings = useCallback(async (userId: string, currentLocalReadings: BPReading[]) => {
     if (!isSupabaseConfigured()) return;
     try {
       const { data, error } = await supabase
@@ -39,7 +38,7 @@ export const useBPStore = () => {
         return;
       }
 
-      if (data) {
+      if (data && data.length > 0) {
         const mapped: BPReading[] = data.map((item) => ({
           id: item.id,
           value: item.value,
@@ -49,6 +48,33 @@ export const useBPStore = () => {
           notes: item.notes || undefined,
         }));
         setReadings(mapped);
+      } else if (currentLocalReadings.length > 0) {
+        // If Supabase is empty for this user, sync local readings to Supabase!
+        const payload = currentLocalReadings.map((r) => ({
+          user_id: userId,
+          value: r.value,
+          meal_state: r.mealState,
+          meal_type: r.mealType,
+          timestamp: r.timestamp,
+          notes: r.notes,
+        }));
+
+        const { data: insertedData, error: insertErr } = await supabase
+          .from('glucose_readings')
+          .insert(payload)
+          .select();
+
+        if (!insertErr && insertedData) {
+          const mapped: BPReading[] = insertedData.map((item) => ({
+            id: item.id,
+            value: item.value,
+            mealState: item.meal_state,
+            mealType: item.meal_type,
+            timestamp: item.timestamp,
+            notes: item.notes || undefined,
+          }));
+          setReadings(mapped);
+        }
       }
     } catch (err) {
       console.error('Unexpected error fetching from Supabase:', err);
@@ -62,7 +88,7 @@ export const useBPStore = () => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        fetchSupabaseReadings(currentUser.id);
+        fetchSupabaseReadings(currentUser.id, readings);
       }
     });
 
@@ -72,7 +98,7 @@ export const useBPStore = () => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        fetchSupabaseReadings(currentUser.id);
+        fetchSupabaseReadings(currentUser.id, readings);
       }
     });
 
@@ -320,6 +346,6 @@ export const useBPStore = () => {
     importFromJSON,
     filterByPeriod,
     calculateMealStats,
-    refetch: () => user && fetchSupabaseReadings(user.id),
+    refetch: () => user && fetchSupabaseReadings(user.id, readings),
   };
 };
