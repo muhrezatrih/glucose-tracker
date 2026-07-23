@@ -331,7 +331,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </section>
 
-        {/* NEAT INTERACTIVE LIVE PREVIEW WIDGET */}
+        {/* PIXEL-PERFECT INTERACTIVE LIVE PREVIEW WIDGET */}
         <section style={{ marginBottom: '70px' }}>
           <div
             className="glass-card"
@@ -376,25 +376,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </button>
             </div>
 
-            {/* Segmented Control Selector */}
+            {/* Neat Equal 3-Column Segmented Control Selector */}
             <div className="segmented-control" style={{ marginBottom: '16px' }}>
               <button
                 onClick={() => setActiveTab('pre')}
                 className={`segmented-control-item ${activeTab === 'pre' ? 'active' : ''}`}
               >
-                🟢 Pre-Meal (108)
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--before-color)', flexShrink: 0 }} />
+                <span>Pre-Meal (108)</span>
               </button>
+
               <button
                 onClick={() => setActiveTab('post')}
                 className={`segmented-control-item ${activeTab === 'post' ? 'active' : ''}`}
               >
-                🟠 Post-Meal (145)
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--after-color)', flexShrink: 0 }} />
+                <span>Post-Meal (145)</span>
               </button>
+
               <button
                 onClick={() => setActiveTab('delta')}
                 className={`segmented-control-item ${activeTab === 'delta' ? 'active' : ''}`}
               >
-                📊 Meal Delta (+37)
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--none-color)', flexShrink: 0 }} />
+                <span>Meal Delta (+37)</span>
               </button>
             </div>
 
@@ -420,7 +425,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <>
                   <div>
                     <div style={{ fontSize: '0.82rem', color: 'var(--before-color)', fontWeight: 700 }}>
-                      🟢 PRE-MEAL BASELINE (FASTING)
+                      PRE-MEAL BASELINE (FASTING)
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                       Breakfast Baseline Entry
@@ -436,7 +441,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <>
                   <div>
                     <div style={{ fontSize: '0.82rem', color: 'var(--after-color)', fontWeight: 700 }}>
-                      🟠 POST-MEAL GLUCOSE SPIKE
+                      POST-MEAL GLUCOSE SPIKE
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                       2 Hours Post-Meal Measurement
@@ -452,7 +457,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <>
                   <div>
                     <div style={{ fontSize: '0.82rem', color: 'var(--none-color)', fontWeight: 700 }}>
-                      📊 MEAL IMPACT DELTA
+                      MEAL IMPACT DELTA
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                       Post-Meal Average - Pre-Meal Average
