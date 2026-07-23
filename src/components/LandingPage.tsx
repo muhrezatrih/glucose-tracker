@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Droplet,
   ShieldCheck,
   ArrowRight,
   Play,
@@ -14,6 +13,7 @@ import {
   X,
   BarChart2,
 } from 'lucide-react';
+import { LogoIcon } from './Logo';
 
 interface LandingPageProps {
   onLaunchDemo: () => void;
@@ -61,24 +61,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           }}
         >
           {/* Logo & Brand Name */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-            <div
-              style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '8px',
-                background: '#10B981',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 10px rgba(16, 185, 129, 0.35)',
-                flexShrink: 0,
-              }}
-            >
-              <Droplet color="#FFFFFF" size={18} />
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+            <LogoIcon size={34} />
             <div>
-              <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                 Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
               </span>
             </div>

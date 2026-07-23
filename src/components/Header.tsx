@@ -1,5 +1,6 @@
 import React from 'react';
-import { Droplet, Download, Sun, Moon, Calendar, User as UserIcon } from 'lucide-react';
+import { Download, Sun, Moon, Calendar, User as UserIcon } from 'lucide-react';
+import { LogoIcon } from './Logo';
 import type { ViewPeriod } from '../types/bp';
 import type { User } from '@supabase/supabase-js';
 
@@ -49,24 +50,10 @@ export const Header: React.FC<HeaderProps> = ({
         }}
       >
         {/* Logo & Clean Brand Title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          <div
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '9px',
-              background: 'linear-gradient(180deg, #10B981 0%, #059669 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 10px rgba(16, 185, 129, 0.35)',
-              flexShrink: 0,
-            }}
-          >
-            <Droplet color="#FFFFFF" size={19} />
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          <LogoIcon size={34} />
           <div>
-            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
               Glucose<span style={{ color: 'var(--before-color)' }}>Pulse</span>
             </h1>
           </div>
@@ -74,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls (Profile, Export CSV, Theme Toggle) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-          {/* User Profile Button - Icon-only on mobile, text-label on desktop */}
+          {/* User Profile Button */}
           <button
             onClick={onOpenAuthModal}
             className="btn btn-secondary"
