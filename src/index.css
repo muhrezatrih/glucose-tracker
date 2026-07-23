@@ -230,12 +230,14 @@ body {
 .segmented-control {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
+  gap: 2px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-card);
-  padding: 4px;
+  padding: 3px;
   border-radius: 12px;
   width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 [data-theme="light"] .segmented-control {
@@ -245,13 +247,13 @@ body {
 
 .segmented-control-item {
   width: 100%;
-  padding: 8px 6px;
+  padding: 7px 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--text-secondary);
@@ -260,7 +262,16 @@ body {
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
+  box-sizing: border-box;
   transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (max-width: 420px) {
+  .segmented-control-item {
+    font-size: 0.72rem;
+    padding: 6px 2px;
+    gap: 4px;
+  }
 }
 
 .segmented-control-item.active {

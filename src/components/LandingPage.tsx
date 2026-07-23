@@ -376,14 +376,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </button>
             </div>
 
-            {/* Neat Equal 3-Column Segmented Control Selector */}
+            {/* Clean Concise Equal 3-Column Segmented Control Selector */}
             <div className="segmented-control" style={{ marginBottom: '16px' }}>
               <button
                 onClick={() => setActiveTab('pre')}
                 className={`segmented-control-item ${activeTab === 'pre' ? 'active' : ''}`}
               >
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--before-color)', flexShrink: 0 }} />
-                <span>Pre-Meal (108)</span>
+                <span>Pre-Meal</span>
               </button>
 
               <button
@@ -391,7 +391,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 className={`segmented-control-item ${activeTab === 'post' ? 'active' : ''}`}
               >
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--after-color)', flexShrink: 0 }} />
-                <span>Post-Meal (145)</span>
+                <span>Post-Meal</span>
               </button>
 
               <button
@@ -399,7 +399,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 className={`segmented-control-item ${activeTab === 'delta' ? 'active' : ''}`}
               >
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--none-color)', flexShrink: 0 }} />
-                <span>Meal Delta (+37)</span>
+                <span>Meal Delta</span>
               </button>
             </div>
 
